@@ -246,7 +246,7 @@
 <body>
 
 <h1>Nurovita Team Dashboard</h1>
-<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->27 Mar 2026, 14:46 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update</p>
+<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->27 Mar 2026, 14:57 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update</p>
 
 <div class="alert-strip">
   <span class="text"><strong>Critical:</strong> Zero-revenue incident caused by misaligned ad copies. Two-check gate now mandatory before any funnel goes live.</span>
@@ -258,7 +258,7 @@
   <div class="stat-tile"><div class="stat-label">Live Funnels (US)</div><div class="stat-value" style="color:#16a34a"><!-- ##STAT:live_us## -->2<!-- /##STAT:live_us## --></div><div class="stat-sub"><!-- ##STAT:live_us:sub## -->Furosemide, Red<!-- /##STAT:live_us:sub## --></div></div>
   <div class="stat-tile"><div class="stat-label">Live Funnels (WW)</div><div class="stat-value" style="color:#1d4ed8"><!-- ##STAT:live_ww## -->2<!-- /##STAT:live_ww## --></div><div class="stat-sub"><!-- ##STAT:live_ww:sub## -->Red Legs NZ &amp; AUS<!-- /##STAT:live_ww:sub## --></div></div>
   <div class="stat-tile"><div class="stat-label">Ready to Launch (US)</div><div class="stat-value" style="color:#7c3aed"><!-- ##STAT:ready_us## -->1<!-- /##STAT:ready_us## --></div><div class="stat-sub"><!-- ##STAT:ready_us:sub## -->7<!-- /##STAT:ready_us:sub## --></div></div>
-  <div class="stat-tile"><div class="stat-label">Videos at Media Check</div><div class="stat-value" style="color:#d97706"><!-- ##STAT:videos_check## -->5<!-- /##STAT:videos_check## --></div><div class="stat-sub"><!-- ##STAT:videos_check:sub## -->5 videos awaiting Stefan<!-- /##STAT:videos_check:sub## --></div></div>
+  <div class="stat-tile"><div class="stat-label">Videos at Media Check</div><div class="stat-value" style="color:#d97706"><!-- ##STAT:videos_check## -->6<!-- /##STAT:videos_check## --></div><div class="stat-sub"><!-- ##STAT:videos_check:sub## -->6 videos awaiting Stefan<!-- /##STAT:videos_check:sub## --></div></div>
   <div class="stat-tile"><div class="stat-label">New Video Scripts</div><div class="stat-value" style="color:#7c3aed"><!-- ##STAT:scripts## -->5<!-- /##STAT:scripts## --></div><div class="stat-sub"><!-- ##STAT:scripts:sub## -->Red (5)<!-- /##STAT:scripts:sub## --></div></div>
 </div>
 
@@ -295,7 +295,7 @@
       <div class="funnel-type-tag">Quiz</div>
     </div>
     <div class="funnel-stats">
-      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Videos at check</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#d97706">1</div><div class="funnel-stat-lbl">Videos at check</div></div>
       <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">New copy live</div></div>
       <div class="funnel-stat"><div class="funnel-stat-val" style="color:#7c3aed">5</div><div class="funnel-stat-lbl">New scripts</div></div>
     </div>
@@ -307,7 +307,7 @@
       <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c90ptux" target="_blank">Nurse and patient interview</a></div>
       <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c8zdxf2" target="_blank">Nurse story video script</a></div>
       <div class="fi"><span class="sp sp-production">Production</span><a href="https://app.clickup.com/t/86c8xqd9a" target="_blank">Concept 9 - Red Legs VSL Dupe</a></div>
-      <div class="fi"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
     </div>
   </div>
 <!-- ##FUNNELS_LIVE_END## -->
@@ -411,7 +411,7 @@
     <div class="gt-cell">
       <div class="gt-metric-name">Videos in progress</div>
       <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:tesfahun:daily## -->3<!-- /##GOAL:tesfahun:daily## --></span><span class="gt-of">videos</span></div>
-      <div class="gt-note"><!-- ##GOAL:tesfahun:daily:note## -->3 revisions<!-- /##GOAL:tesfahun:daily:note## --></div>
+      <div class="gt-note"><!-- ##GOAL:tesfahun:daily:note## -->3 mediabuyer check<!-- /##GOAL:tesfahun:daily:note## --></div>
     </div>
     <div class="gt-cell">
       <div class="gt-metric-name">Videos in pipeline (hooks)</div>
@@ -600,10 +600,15 @@
       <div class="wl-name">Terie</div><div class="wl-role">Funnel Builder</div>
       <div class="wl-count">3</div><div class="wl-lbl">Active</div><div class="wl-hours"><span class="hrs-tw">34.0h</span><span class="hrs-lw" style="display:none">35.4h</span></div>
     </div>
+    <div class="wl-card wl-low" onclick="openModal('alexander')">
+      <div class="wl-av" style="background:#dbeafe;color:#1d4ed8">A</div>
+      <div class="wl-name">Alexander</div><div class="wl-role">Designer</div>
+      <div class="wl-count">1</div><div class="wl-lbl">Active</div><div class="wl-hours"><span class="hrs-tw">26.7h</span><span class="hrs-lw" style="display:none">41.4h</span></div>
+    </div>
     <div class="wl-card wl-high" onclick="openModal('muhammad')">
       <div class="wl-av" style="background:#ede9fe;color:#6d28d9">M</div>
       <div class="wl-name">Muhammad</div><div class="wl-role">Copywriter</div>
-      <div class="wl-count">11</div><div class="wl-lbl">High load</div>
+      <div class="wl-count">13</div><div class="wl-lbl">High load</div>
     </div>
     <div class="wl-card wl-medium" onclick="openModal('raz')">
       <div class="wl-av" style="background:#fee2e2;color:#b91c1c">R</div>
@@ -623,7 +628,7 @@
     <div class="wl-card wl-high" onclick="openModal('stefan')">
       <div class="wl-av" style="background:#e0e7ff;color:#4338ca">S</div>
       <div class="wl-name">Stefan</div><div class="wl-role">Media Buyer</div>
-      <div class="wl-count">12</div><div class="wl-lbl">High load</div>
+      <div class="wl-count">15</div><div class="wl-lbl">High load</div>
     </div>
     <div class="wl-card wl-medium" onclick="openModal('marjorie')">
       <div class="wl-av" style="background:#e0f2fe;color:#0284c7">M</div>
@@ -633,14 +638,9 @@
     <div class="wl-card wl-high" onclick="openModal('michael')">
       <div class="wl-av" style="background:#fef9c3;color:#92400e">M</div>
       <div class="wl-name">Michael</div><div class="wl-role">Owner</div>
-      <div class="wl-count">8</div><div class="wl-lbl">High load</div>
+      <div class="wl-count">12</div><div class="wl-lbl">High load</div>
     </div>
   <div class="wl-divider"></div>
-    <div class="wl-card wl-none" onclick="openModal('alexander')">
-      <div class="wl-av" style="background:#dbeafe;color:#1d4ed8">A</div>
-      <div class="wl-name">Alexander</div><div class="wl-role">Designer</div>
-      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">26.7h</span><span class="hrs-lw" style="display:none">41.4h</span></div>
-    </div>
     <div class="wl-card wl-none" onclick="openModal('sam')">
       <div class="wl-av" style="background:#ccfbf1;color:#0f766e">S</div>
       <div class="wl-name">Sam</div><div class="wl-role">Support</div>
@@ -654,7 +654,7 @@
     <div class="wl-card wl-none" onclick="openModal('jerome')">
       <div class="wl-av" style="background:#fdf4ff;color:#a21caf">J</div>
       <div class="wl-name">Jerome</div><div class="wl-role">Ad Research</div>
-      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">20.2h</span><span class="hrs-lw" style="display:none">20.3h</span></div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">20.4h</span><span class="hrs-lw" style="display:none">20.3h</span></div>
     </div>
     <div class="wl-card wl-none" onclick="openModal('natalia')">
       <div class="wl-av" style="background:#faf5ff;color:#7c3aed">N</div>
@@ -712,7 +712,7 @@
       </div>
     </div>
     <div class="tasks-panel"><!-- ##TP:tesfahun:START## -->
-      <div class="ti"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm09u" target="_blank">Furosemide &quot;THE RANKING&quot; Format</a></div>
 <!-- ##TP:tesfahun:END## --></div>
     <div class="tc-kpis">
@@ -758,21 +758,23 @@
       <div><div class="tc-name">Muhammad Hameed</div><div class="tc-role">Copywriter / Scriptwriter</div></div>
       <div class="tc-right">
         <span class="badge green">Active</span>
-        <button class="tasks-toggle" data-person="muhammad" onclick="event.stopPropagation();toggleTasks(this)">11 tasks <span class="arrow">&#9660;</span></button>
+        <button class="tasks-toggle" data-person="muhammad" onclick="event.stopPropagation();toggleTasks(this)">13 tasks <span class="arrow">&#9660;</span></button>
       </div>
     </div>
     <div class="tasks-panel"><!-- ##TP:muhammad:START## -->
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c91hmr4" target="_blank">neuropathy ad copies set 2 26/03/26</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pxyu" target="_blank">Full woman visible (legs + before/after)</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pwz4" target="_blank">Failed solutions → switch to avatar</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pw85" target="_blank">Simple video (easy to recreate)</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90ptux" target="_blank">Nurse and patient interview</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8zh0pq" target="_blank">Compression Socks Susan ad copies 3x 24/03/26</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8zdxf2" target="_blank">Nurse story video script</a></div>
       <div class="ti"><span class="sp sp-production">Production</span><a href="https://app.clickup.com/t/86c8xqd9a" target="_blank">Concept 9 - Red Legs VSL Dupe</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
-      <div class="ti"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
 <!-- ##TP:muhammad:END## --></div>
     <div class="tc-kpis">
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Scripts + copies / week</span><span class="kpi-value kv-y">8 in pipeline &mdash; target: 20</span></div>
@@ -814,11 +816,11 @@
       <div><div class="tc-name">Alexander (Aleksandar)</div><div class="tc-role">Designer</div></div>
       <div class="tc-right">
         <span class="badge grey">No Active Tasks</span>
-        <button class="tasks-toggle" data-person="alexander" onclick="event.stopPropagation();toggleTasks(this)">0 tasks <span class="arrow">&#9660;</span></button>
+        <button class="tasks-toggle" data-person="alexander" onclick="event.stopPropagation();toggleTasks(this)">1 tasks <span class="arrow">&#9660;</span></button>
       </div>
     </div>
     <div class="tasks-panel"><!-- ##TP:alexander:START## -->
-      <div class="no-tasks-msg">No active tasks found.</div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c91xy2d" target="_blank">Provide new photos based on winners</a></div>
 <!-- ##TP:alexander:END## --></div>
     <div class="tc-kpis">
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:alexander:START## --><span class="hrs-tw"><span class="kv-y">26.7h</span><span class="hrs-bar"><span class="hrs-fill" style="width:67%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">41.4h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:alexander:END## --></div>
@@ -842,17 +844,20 @@
       <div><div class="tc-name">Stefan Milovanovic</div><div class="tc-role">Media Buyer</div></div>
       <div class="tc-right">
         <span class="badge green">Active</span>
-        <button class="tasks-toggle" data-person="stefan" onclick="event.stopPropagation();toggleTasks(this)">12 tasks <span class="arrow">&#9660;</span></button>
+        <button class="tasks-toggle" data-person="stefan" onclick="event.stopPropagation();toggleTasks(this)">15 tasks <span class="arrow">&#9660;</span></button>
       </div>
     </div>
     <div class="tasks-panel"><!-- ##TP:stefan:START## -->
       <div class="ti"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8zx8cg" target="_blank">Red Legs V3 - Standard - 24/03/26</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8z64q0" target="_blank">Furosemide Animation 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8yd490" target="_blank">Nora ad copy set 1 17/03/26</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8xppr2" target="_blank">Night Cramps - Standard - 20/03/26</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8xj52g" target="_blank">Ad Copies 2x Nurse Clinic Stories 18/03/26</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm09u" target="_blank">Furosemide &quot;THE RANKING&quot; Format</a></div>
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8tzjqu" target="_blank">7reasons (Listicle) Standard 13/03/2026</a></div>
       <div class="ti"><span class="sp sp-ready">Ready</span><a href="https://app.clickup.com/t/86c8np92h" target="_blank">Blood pressure medicine (Lisinopril) + ankle/leg swelling</a></div>
@@ -986,7 +991,7 @@
       <div class="no-tasks-msg">No active tasks found.</div>
 <!-- ##TP:jerome:END## --></div>
     <div class="tc-kpis">
-      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:jerome:START## --><span class="hrs-tw"><span class="kv-g">20.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">20.3h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:jerome:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:jerome:START## --><span class="hrs-tw"><span class="kv-g">20.4h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">20.3h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:jerome:END## --></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Daily swipes</span><span class="kpi-value kv-g">Ads 3+ &bull; VSLs 2+ &bull; Quiz 1 &mdash; &#x2705;</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Upsell swipes / week</span><span class="kpi-value kv-r">2&ndash;3 / week &mdash; min 5 &#x26A0;</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Weekly deliverables</span><span class="kpi-value kv-g">Friday report &#x2705; &bull; Sheet same-day &#x2705;</span></div>
@@ -1062,7 +1067,9 @@ const people = {
   alexander: {
     name:"Aleksandar Mihailovic", role:"Designer", initials:"AM",
     avBg:"#dbeafe", avColor:"#1d4ed8", status:"ok",
-    /* ##TASKS:alexander:START## */tasks:[],/* ##TASKS:alexander:END## */
+    /* ##TASKS:alexander:START## */tasks:[
+      {sp:"sp-todo", label:"Provide new photos based on winners", url:"https://app.clickup.com/t/86c91xy2d"},
+    ],/* ##TASKS:alexander:END## */
     hours: /* ##HOURS:alexander## */26.7/* /##HOURS:alexander## */, hoursLw: /* ##HOURSLW:alexander## */41.4/* /##HOURSLW:alexander## */,
     kpis:[
       {dot:"g", label:"Photo sets / day", value:"2 sets (~20 photos)", vc:"kv-g"},
@@ -1081,17 +1088,19 @@ const people = {
     name:"Muhammad Hameed", role:"Copywriter / Scriptwriter", initials:"MH",
     avBg:"#ede9fe", avColor:"#6d28d9", status:"warn",
     /* ##TASKS:muhammad:START## */tasks:[
+      {sp:"sp-todo", label:"neuropathy ad copies set 2 26/03/26", url:"https://app.clickup.com/t/86c91hmr4"},
       {sp:"sp-todo", label:"Full woman visible (legs + before/after)", url:"https://app.clickup.com/t/86c90pxyu"},
       {sp:"sp-todo", label:"Failed solutions → switch to avatar", url:"https://app.clickup.com/t/86c90pwz4"},
       {sp:"sp-todo", label:"Simple video (easy to recreate)", url:"https://app.clickup.com/t/86c90pw85"},
       {sp:"sp-todo", label:"Nurse and patient interview", url:"https://app.clickup.com/t/86c90ptux"},
+      {sp:"sp-todo", label:"Compression Socks Susan ad copies 3x 24/03/26", url:"https://app.clickup.com/t/86c8zh0pq"},
       {sp:"sp-todo", label:"Nurse story video script", url:"https://app.clickup.com/t/86c8zdxf2"},
       {sp:"sp-production", label:"Concept 9 - Red Legs VSL Dupe", url:"https://app.clickup.com/t/86c8xqd9a"},
       {sp:"sp-todo", label:"UGC Furosemide 4", url:"https://app.clickup.com/t/86c8x7pr6"},
       {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe", url:"https://app.clickup.com/t/86c8x13uw"},
       {sp:"sp-todo", label:"UGC Furosemide 3", url:"https://app.clickup.com/t/86c8wh4mb"},
       {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic)", url:"https://app.clickup.com/t/86c8vrfwc"},
-      {sp:"sp-revisions", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
+      {sp:"sp-todo", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
     ],/* ##TASKS:muhammad:END## */
     hours: null,
     kpis:[
@@ -1133,7 +1142,7 @@ const people = {
     name:"Tesfahun Bekele", role:"Video Editor", initials:"TB",
     avBg:"#e0f2fe", avColor:"#0369a1", status:"ok",
     /* ##TASKS:tesfahun:START## */tasks:[
-      {sp:"sp-revisions", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
+      {sp:"sp-todo", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
       {sp:"sp-todo", label:"Furosemide \"THE RANKING\" Format", url:"https://app.clickup.com/t/86c8vm09u"},
     ],/* ##TASKS:tesfahun:END## */
     hours: null,
@@ -1170,11 +1179,14 @@ const people = {
     /* ##TASKS:stefan:START## */tasks:[
       {sp:"sp-media", label:"Red Legs V3 - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zx8cg"},
       {sp:"sp-todo", label:"Furosemide Animation 3", url:"https://app.clickup.com/t/86c8z64q0"},
+      {sp:"sp-todo", label:"Nora ad copy set 1 17/03/26", url:"https://app.clickup.com/t/86c8yd490"},
       {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
+      {sp:"sp-todo", label:"Ad Copies 2x Nurse Clinic Stories 18/03/26", url:"https://app.clickup.com/t/86c8xj52g"},
       {sp:"sp-todo", label:"UGC Furosemide 4", url:"https://app.clickup.com/t/86c8x7pr6"},
       {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe", url:"https://app.clickup.com/t/86c8x13uw"},
       {sp:"sp-todo", label:"UGC Furosemide 3", url:"https://app.clickup.com/t/86c8wh4mb"},
       {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic)", url:"https://app.clickup.com/t/86c8vrfwc"},
+      {sp:"sp-todo", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
       {sp:"sp-todo", label:"Furosemide \"THE RANKING\" Format", url:"https://app.clickup.com/t/86c8vm09u"},
       {sp:"sp-todo", label:"7reasons (Listicle) Standard 13/03/2026", url:"https://app.clickup.com/t/86c8tzjqu"},
       {sp:"sp-ready", label:"Blood pressure medicine (Lisinopril) + ankle/leg swelling", url:"https://app.clickup.com/t/86c8np92h"},
@@ -1250,7 +1262,7 @@ const people = {
     name:"Jerome Rafallo", role:"Competitor & Ad Research", initials:"JR",
     avBg:"#fdf4ff", avColor:"#a21caf", status:"warn",
     /* ##TASKS:jerome:START## */tasks:[],/* ##TASKS:jerome:END## */
-    hours: /* ##HOURS:jerome## */20.2/* /##HOURS:jerome## */, hoursLw: /* ##HOURSLW:jerome## */20.3/* /##HOURSLW:jerome## */, hrsTarget: 20,
+    hours: /* ##HOURS:jerome## */20.4/* /##HOURS:jerome## */, hoursLw: /* ##HOURSLW:jerome## */20.3/* /##HOURSLW:jerome## */, hrsTarget: 20,
     kpis:[
       {dot:"r", label:"Post-purchase upsell swipes / week", value:"2–3/week — min 5 ⚠️", vc:"kv-r"},
       {dot:"g", label:"Static ad competitors / day", value:"3+ / day — consistent", vc:"kv-g"},
@@ -1267,14 +1279,18 @@ const people = {
     name:"Michael B", role:"Owner / Advertorial Writer", initials:"MB",
     avBg:"#fef9c3", avColor:"#92400e", status:"alert",
     /* ##TASKS:michael:START## */tasks:[
+      {sp:"sp-todo", label:"neuropathy ad copies set 2 26/03/26", url:"https://app.clickup.com/t/86c91hmr4"},
       {sp:"sp-todo", label:"Full woman visible (legs + before/after)", url:"https://app.clickup.com/t/86c90pxyu"},
       {sp:"sp-todo", label:"Failed solutions → switch to avatar", url:"https://app.clickup.com/t/86c90pwz4"},
       {sp:"sp-todo", label:"Simple video (easy to recreate)", url:"https://app.clickup.com/t/86c90pw85"},
       {sp:"sp-todo", label:"Nurse and patient interview", url:"https://app.clickup.com/t/86c90ptux"},
       {sp:"sp-todo", label:"Lymphatic-dtv1 - Standard - 25/03/26", url:"https://app.clickup.com/t/86c90dfmu"},
       {sp:"sp-todo", label:"Neuropathy Science - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zpne8"},
+      {sp:"sp-todo", label:"Compression Socks Susan ad copies 3x 24/03/26", url:"https://app.clickup.com/t/86c8zh0pq"},
       {sp:"sp-todo", label:"Nurse story video script", url:"https://app.clickup.com/t/86c8zdxf2"},
+      {sp:"sp-todo", label:"Nora ad copy set 1 17/03/26", url:"https://app.clickup.com/t/86c8yd490"},
       {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
+      {sp:"sp-todo", label:"Ad Copies 2x Nurse Clinic Stories 18/03/26", url:"https://app.clickup.com/t/86c8xj52g"},
     ],/* ##TASKS:michael:END## */
     hours: /* ##HOURS:michael## */null/* /##HOURS:michael## */, hoursLw: /* ##HOURSLW:michael## */null/* /##HOURSLW:michael## */,
     kpis:[
