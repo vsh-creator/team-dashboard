@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nurovita Team Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #1e293b; padding: 24px; }
+  h1 { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+  .subtitle { font-size: 12px; color: #64748b; margin-bottom: 22px; }
+  .section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #64748b; margin: 28px 0 10px; }
+  .grid { display: grid; gap: 12px; }
+  .grid-5 { grid-template-columns: repeat(5,1fr); }
+  .grid-3 { grid-template-columns: repeat(3,1fr); }
+  @media(max-width:1100px){ .grid-5{grid-template-columns:repeat(3,1fr);} .grid-3{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:700px){ .grid-5,.grid-3{grid-template-columns:1fr;} }
+
+  .hidden-section { display: none !important; }
+
+  /* ALERT */
+  .alert-strip { background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:10px 14px; display:flex; align-items:flex-start; gap:8px; margin-bottom:12px; }
+  .alert-strip .text { font-size:11px; color:#b91c1c; line-height:1.5; }
+  .alert-strip .text strong { color:#dc2626; }
+
+  /* STAT TILES */
+  .stat-tile { background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 16px; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+  .stat-label { font-size:11px; color:#64748b; margin-bottom:4px; }
+  .stat-value { font-size:26px; font-weight:800; line-height:1; }
+  .stat-sub { font-size:10px; color:#94a3b8; margin-top:3px; }
+
+  /* BADGE */
+  .badge { font-size:10px; font-weight:600; padding:2px 7px; border-radius:20px; white-space:nowrap; display:inline-block; }
+  .badge.green  { background:#dcfce7; color:#15803d; }
+  .badge.yellow { background:#fef9c3; color:#92400e; }
+  .badge.red    { background:#fee2e2; color:#dc2626; }
+  .badge.blue   { background:#dbeafe; color:#1d4ed8; }
+  .badge.grey   { background:#f1f5f9; color:#475569; }
+  .badge.purple { background:#ede9fe; color:#6d28d9; }
+  .badge.orange { background:#ffedd5; color:#c2410c; }
+
+  /* STATUS PILL */
+  .sp { font-size:9px; font-weight:700; padding:1px 5px; border-radius:8px; white-space:nowrap; flex-shrink:0; text-transform:uppercase; letter-spacing:0.4px; }
+  .sp-live       { background:#dcfce7; color:#15803d; }
+  .sp-media      { background:#ede9fe; color:#6d28d9; }
+  .sp-briefing   { background:#f1f5f9; color:#475569; }
+  .sp-production { background:#dbeafe; color:#1d4ed8; }
+  .sp-revisions  { background:#ffedd5; color:#c2410c; }
+  .sp-concept    { background:#f1f5f9; color:#64748b; }
+  .sp-testing    { background:#dcfce7; color:#15803d; }
+  .sp-ready      { background:#dcfce7; color:#15803d; }
+  .sp-todo       { background:#f1f5f9; color:#64748b; }
+  .sp-paused     { background:#fee2e2; color:#dc2626; }
+  .sp-design     { background:#ede9fe; color:#6d28d9; }
+  .sp-listicle   { background:#dcfce7; color:#15803d; }
+  .sp-inprog     { background:#dbeafe; color:#1d4ed8; }
+  .sp-cwqa       { background:#fefce8; color:#a16207; }
+
+  /* LIVE FUNNEL CARDS */
+  .funnel-card { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+  .funnel-head { padding:12px 14px 10px; border-bottom:1px solid #e2e8f0; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .funnel-name { font-size:13px; font-weight:700; color:#0f172a; line-height:1.3; }
+  .funnel-link { font-size:10px; color:#3b82f6; text-decoration:none; display:block; margin-top:2px; }
+  .funnel-link:hover { text-decoration:underline; }
+  .funnel-type-tag { font-size:9px; font-weight:600; padding:2px 6px; border-radius:4px; background:#f1f5f9; color:#64748b; white-space:nowrap; flex-shrink:0; }
+  .funnel-stats { display:flex; border-bottom:1px solid #e2e8f0; }
+  .funnel-stat { flex:1; padding:8px 12px; border-right:1px solid #e2e8f0; }
+  .funnel-stat:last-child { border-right:none; }
+  .funnel-stat-val { font-size:17px; font-weight:800; line-height:1; }
+  .funnel-stat-lbl { font-size:9px; color:#94a3b8; margin-top:2px; }
+  .funnel-items { padding:8px 12px; }
+  .funnel-sub-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin-bottom:5px; }
+  .fi { display:flex; align-items:center; gap:6px; padding:3px 0; border-top:1px solid #f1f5f9; font-size:11px; }
+  .fi:first-child { border-top:none; }
+  .fi a { color:#475569; text-decoration:none; flex:1; line-height:1.3; }
+  .fi a:hover { color:#3b82f6; }
+
+  /* ── WORKLOAD TRACKER ── */
+  .wl-grid { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-start; }
+  .wl-divider { width:1px; background:#e2e8f0; align-self:stretch; margin:0 4px; }
+  .wl-col-header { display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; margin-bottom:2px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+  .wl-col-header.ch-alert  { background:#fef2f2; border:1px solid #fca5a5; color:#dc2626; }
+  .wl-col-header.ch-high   { background:#fef2f2; border:1px solid #fca5a5; color:#dc2626; }
+  .wl-col-header.ch-active { background:#f0fdf4; border:1px solid #86efac; color:#16a34a; }
+  .wl-col-header.ch-none   { background:#f8fafc; border:1px solid #e2e8f0; color:#64748b; }
+  .wl-col-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .ch-alert .wl-col-dot  { background:#f87171; box-shadow:0 0 5px #f8717188; }
+  .ch-high  .wl-col-dot  { background:#f87171; }
+  .ch-active .wl-col-dot { background:#4ade80; }
+  .ch-none  .wl-col-dot  { background:#94a3b8; }
+
+  .wl-card { border-radius:10px; padding:12px 8px 10px; text-align:center; border:1px solid transparent; cursor:pointer; transition:transform 0.15s, box-shadow 0.15s; width:88px; min-height:110px; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; }
+  .wl-card:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+  .wl-hours { font-size:10px; color:#64748b; margin-top:3px; }
+  .week-toggle { display:inline-flex; align-items:center; gap:0; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; margin-left:auto; }
+  .week-toggle button { background:#fff; border:none; padding:3px 9px; font-size:10px; font-weight:600; cursor:pointer; color:#94a3b8; letter-spacing:.5px; transition:background .15s,color .15s; }
+  .week-toggle button.active { background:#1d4ed8; color:#fff; }
+  .week-toggle button:hover:not(.active) { background:#f1f5f9; color:#475569; }
+  .wl-card.wl-none   { background:#f8fafc; border-color:#e2e8f0; }
+  .wl-card.wl-low    { background:#f0fdf4; border-color:#86efac; }
+  .wl-card.wl-medium { background:#fffbeb; border-color:#fde68a; }
+  .wl-card.wl-high   { background:#fef2f2; border-color:#fca5a5; }
+  .wl-card.wl-alert  { background:#fef2f2; border-color:#f87171; box-shadow:0 0 0 1px #f8717133; }
+
+  .wl-av { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; margin:0 auto 6px; }
+  .wl-name { font-size:11px; font-weight:600; color:#1e293b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .wl-role { font-size:9px; color:#64748b; margin-top:1px; margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; }
+  .wl-count { font-size:20px; font-weight:800; line-height:1; margin-bottom:1px; }
+  .wl-lbl { font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.4px; }
+  .wl-none   .wl-count { color:#94a3b8; } .wl-none   .wl-lbl { color:#cbd5e1; }
+  .wl-low    .wl-count { color:#16a34a; } .wl-low    .wl-lbl { color:#86efac; }
+  .wl-medium .wl-count { color:#d97706; } .wl-medium .wl-lbl { color:#fbbf24; }
+  .wl-high   .wl-count { color:#dc2626; } .wl-high   .wl-lbl { color:#fca5a5; }
+  .wl-alert  .wl-count { color:#dc2626; } .wl-alert  .wl-lbl { color:#dc2626; }
+
+  /* KPI ALERT DOT */
+  .kpi-alert-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; display:inline-block; }
+  .dot-g { background:#4ade80; }
+  .dot-y { background:#fbbf24; }
+  .dot-r { background:#f87171; box-shadow:0 0 4px #f8717188; }
+
+  /* ── TEAM CARDS ── */
+  .tc { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; transition:border-color 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+  .tc.tc-alert  { border-color:#fca5a5; box-shadow:0 0 0 1px #fca5a522; }
+  .tc.tc-warn   { border-color:#fde68a; }
+  .tc.tc-ok     { border-color:#86efac; }
+
+  .tc-head { padding:12px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .tc-head:hover .tc-name { text-decoration:underline; }
+  .av { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .tc-name { font-size:13px; font-weight:700; color:#0f172a; cursor:pointer; }
+  .tc-name:hover { color:#3b82f6; }
+  .tc-role { font-size:10px; color:#64748b; margin-top:1px; }
+  .tc-right { margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+
+  .tasks-toggle { background:#f1f5f9; border:1px solid #e2e8f0; color:#3b82f6; font-size:10px; font-weight:600; padding:3px 9px; border-radius:6px; cursor:pointer; display:flex; align-items:center; gap:3px; transition:background 0.15s; }
+  .tasks-toggle:hover { background:#e2e8f0; }
+  .arrow { transition:transform 0.2s; display:inline-block; font-size:8px; }
+  .tasks-toggle.open .arrow { transform:rotate(180deg); }
+
+  .tasks-panel { display:none; border-top:1px solid #e2e8f0; background:#f8fafc; padding:8px 12px; }
+  .tasks-panel.open { display:block; }
+  .ti { display:flex; align-items:center; gap:6px; padding:4px 0; border-top:1px solid #f1f5f9; }
+  .ti:first-child { border-top:none; }
+  .ti a { color:#475569; text-decoration:none; font-size:11px; flex:1; line-height:1.3; }
+  .ti a:hover { color:#3b82f6; }
+  .no-tasks-msg { font-size:11px; color:#94a3b8; font-style:italic; padding:4px 0; }
+
+  .tc-kpis { padding:8px 14px 10px; }
+  .kpi-row { display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-top:1px solid #f1f5f9; gap:8px; }
+  .kpi-label { font-size:11px; color:#64748b; flex:1; display:flex; align-items:center; gap:5px; }
+  .kpi-value { font-size:11px; font-weight:600; text-align:right; flex-shrink:0; }
+  .kv-g { color:#16a34a; } .kv-y { color:#d97706; } .kv-r { color:#dc2626; } .kv-w { color:#475569; }
+  .kv-b { color:#2563eb; }
+  .dot-b { background:#2563eb !important; }
+  .hrs-bar { display:inline-block; width:60px; height:5px; background:#e2e8f0; border-radius:3px; vertical-align:middle; margin-left:6px; overflow:hidden; }
+  .hrs-fill { display:block; height:100%; border-radius:3px; background:#2563eb; transition:width 0.3s; }
+
+  .tc-flags { padding:0 14px 10px; display:flex; gap:5px; flex-wrap:wrap; }
+
+  /* ── GOALS TRACKER ── */
+  .gt-wrap { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
+  .gt-thead { display:grid; grid-template-columns:170px 1fr 1fr; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
+  .gt-th { padding:8px 14px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; border-right:1px solid #e2e8f0; }
+  .gt-th:last-child { border-right:none; }
+  .gt-group-hdr { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; background:#f8fafc; padding:5px 14px; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; }
+  .gt-row { display:grid; grid-template-columns:170px 1fr 1fr; border-bottom:1px solid #f1f5f9; }
+  .gt-row:last-child { border-bottom:none; }
+  .gt-person { padding:10px 14px; display:flex; align-items:center; gap:8px; border-right:1px solid #f1f5f9; }
+  .gt-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
+  .gt-name { font-size:12px; font-weight:600; color:#1e293b; line-height:1.2; }
+  .gt-role-lbl { font-size:9px; color:#94a3b8; }
+  .gt-cell { padding:10px 14px; border-right:1px solid #f1f5f9; }
+  .gt-cell:last-child { border-right:none; }
+  .gt-metric-name { font-size:10px; color:#64748b; margin-bottom:3px; }
+  .gt-nums { display:flex; align-items:baseline; gap:4px; }
+  .gt-achieved { font-size:20px; font-weight:800; line-height:1; }
+  .gt-achieved.ga-green  { color:#16a34a; }
+  .gt-achieved.ga-yellow { color:#d97706; }
+  .gt-achieved.ga-red    { color:#dc2626; }
+  .gt-achieved.ga-grey   { color:#cbd5e1; }
+  .gt-of { font-size:11px; color:#94a3b8; }
+  .gt-note { font-size:9px; color:#94a3b8; margin-top:2px; font-style:italic; }
+
+  /* GROUP LABELS */
+  .group-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin:20px 0 8px; padding:3px 0 3px 8px; border-left:3px solid #e2e8f0; }
+  .group-label:first-of-type { margin-top:12px; }
+
+  /* GATE */
+  .gate-card { background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:14px 16px; }
+  .gate-step { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-top:1px solid #dbeafe; }
+  .gate-step:first-child { border-top:none; padding-top:0; }
+  .gate-num { width:22px; height:22px; border-radius:50%; background:#dbeafe; color:#1d4ed8; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .gate-info { flex:1; }
+  .gate-step-title { font-size:12px; font-weight:600; color:#1e293b; }
+  .gate-step-sub { font-size:11px; color:#64748b; margin-top:1px; }
+  .gate-owner { font-size:10px; font-weight:600; color:#3b82f6; margin-top:3px; }
+
+  /* DECISIONS */
+  .plain-card { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; }
+  .decision-row { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-top:1px solid #e2e8f0; }
+  .decision-row:first-child { border-top:none; padding-top:0; }
+  .dec-num { font-size:10px; font-weight:700; color:#94a3b8; flex-shrink:0; width:16px; }
+  .dec-text { font-size:11px; color:#475569; line-height:1.5; flex:1; }
+  .dec-owner { font-size:10px; font-weight:600; color:#d97706; white-space:nowrap; flex-shrink:0; }
+
+  /* ── MODAL ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000; align-items:flex-start; justify-content:flex-end; }
+  .modal-overlay.open { display:flex; }
+  .modal-drawer {
+    background:#ffffff; border-left:1px solid #e2e8f0; width:420px; max-width:95vw;
+    height:100vh; overflow-y:auto; padding:0;
+    animation:slideIn 0.2s ease;
+    box-shadow:-4px 0 24px rgba(0,0,0,0.1);
+  }
+  @keyframes slideIn { from{transform:translateX(60px);opacity:0;} to{transform:translateX(0);opacity:1;} }
+  .modal-header { padding:20px 20px 16px; border-bottom:1px solid #e2e8f0; display:flex; align-items:flex-start; gap:14px; position:sticky; top:0; background:#ffffff; z-index:10; }
+  .modal-av { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700; flex-shrink:0; }
+  .modal-name { font-size:16px; font-weight:700; color:#0f172a; }
+  .modal-role { font-size:12px; color:#64748b; margin-top:2px; }
+  .modal-close { margin-left:auto; background:none; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px; border-radius:6px; flex-shrink:0; }
+  .modal-close:hover { color:#1e293b; background:#f1f5f9; }
+  .modal-body { padding:16px 20px; }
+  .modal-section-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin-bottom:8px; }
+  .modal-section { margin-bottom:20px; }
+  .modal-task-item { display:flex; align-items:center; gap:7px; padding:5px 0; border-top:1px solid #f1f5f9; }
+  .modal-task-item:first-child { border-top:none; }
+  .modal-task-item a { color:#475569; text-decoration:none; font-size:12px; flex:1; line-height:1.4; }
+  .modal-task-item a:hover { color:#3b82f6; }
+  .modal-kpi-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-top:1px solid #f1f5f9; gap:8px; }
+  .modal-kpi-row:first-child { border-top:none; }
+  .modal-kpi-label { font-size:12px; color:#64748b; flex:1; display:flex; align-items:center; gap:6px; }
+  .modal-kpi-value { font-size:12px; font-weight:600; }
+  .modal-flag { display:flex; gap:8px; align-items:flex-start; padding:6px 10px; background:#f8fafc; border-radius:6px; margin-bottom:6px; border:1px solid #e2e8f0; }
+  .modal-flag.red    { background:#fef2f2; border-color:#fca5a5; }
+  .modal-flag.yellow { background:#fffbeb; border-color:#fde68a; }
+  .modal-flag-icon { font-size:13px; flex-shrink:0; }
+  .modal-flag-text { font-size:11px; color:#475569; line-height:1.4; }
+  .no-tasks-modal { font-size:12px; color:#94a3b8; font-style:italic; padding:6px 0; }
+  .modal-stat-row { display:flex; gap:10px; margin-bottom:12px; }
+  .modal-stat { flex:1; background:#f8fafc; border-radius:8px; padding:10px 12px; border:1px solid #e2e8f0; }
+  .modal-stat-val { font-size:18px; font-weight:800; }
+  .modal-stat-lbl { font-size:10px; color:#64748b; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<h1>Nurovita Team Dashboard</h1>
+<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->27 Mar 2026, 13:26 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update</p>
+
+<div class="alert-strip">
+  <span class="text"><strong>Critical:</strong> Zero-revenue incident caused by misaligned ad copies. Two-check gate now mandatory before any funnel goes live.</span>
+</div>
+
+<!-- STATS -->
+<div class="section-title">Overall Statistics</div>
+<div class="grid grid-5">
+  <div class="stat-tile"><div class="stat-label">Live Funnels (US)</div><div class="stat-value" style="color:#16a34a"><!-- ##STAT:live_us## -->3<!-- /##STAT:live_us## --></div><div class="stat-sub"><!-- ##STAT:live_us:sub## -->Furosemide, Nora, Red<!-- /##STAT:live_us:sub## --></div></div>
+  <div class="stat-tile"><div class="stat-label">Live Funnels (WW)</div><div class="stat-value" style="color:#1d4ed8"><!-- ##STAT:live_ww## -->2<!-- /##STAT:live_ww## --></div><div class="stat-sub"><!-- ##STAT:live_ww:sub## -->Red Legs NZ &amp; AUS<!-- /##STAT:live_ww:sub## --></div></div>
+  <div class="stat-tile"><div class="stat-label">Ready to Launch (US)</div><div class="stat-value" style="color:#7c3aed"><!-- ##STAT:ready_us## -->1<!-- /##STAT:ready_us## --></div><div class="stat-sub"><!-- ##STAT:ready_us:sub## -->7<!-- /##STAT:ready_us:sub## --></div></div>
+  <div class="stat-tile"><div class="stat-label">Videos at Media Check</div><div class="stat-value" style="color:#d97706"><!-- ##STAT:videos_check## -->5<!-- /##STAT:videos_check## --></div><div class="stat-sub"><!-- ##STAT:videos_check:sub## -->5 videos awaiting Stefan<!-- /##STAT:videos_check:sub## --></div></div>
+  <div class="stat-tile"><div class="stat-label">New Video Scripts</div><div class="stat-value" style="color:#7c3aed"><!-- ##STAT:scripts## -->5<!-- /##STAT:scripts## --></div><div class="stat-sub"><!-- ##STAT:scripts:sub## -->Red (5)<!-- /##STAT:scripts:sub## --></div></div>
+</div>
+
+<!-- LIVE FUNNELS -->
+<div class="section-title" id="funnels-toggle" onclick="toggleFunnels()" style="display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;">
+  <span>Live Funnels &mdash; US</span>
+  <span style="font-size:8px;letter-spacing:0;">&#9660;</span>
+</div>
+<div id="funnels-grid" class="grid grid-3">
+<!-- ##FUNNELS_LIVE_START## -->
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Furosemide (Swollen Legs)</div><a href="https://offer.trynurovita.com/lymphatic-furov1-adv" target="_blank" class="funnel-link">offer.trynurovita.com/lymphatic-furov1-adv &#8599;</a></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-stats">
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#16a34a">5</div><div class="funnel-stat-lbl">Videos at check</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">New copy live</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Scripts / prod</div></div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Active items</div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8z64q0" target="_blank">Furosemide Animation 3</a></div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
+      <div class="fi"><span class="sp sp-ready">Ready</span><a href="https://app.clickup.com/t/86c8vm09u" target="_blank">Furosemide &quot;THE RANKING&quot; Format</a></div>
+    </div>
+  </div>
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Nora (Swollen Legs)</div><a href="https://offer.trynurovita.com/nora-v2-adv" target="_blank" class="funnel-link">offer.trynurovita.com/nora-v2-adv &#8599;</a></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-stats">
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Videos at check</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">New copy live</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Scripts / prod</div></div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Active items</div>
+      <div class="fi"><span class="sp sp-todo">—</span><a href="#">No active items</a></div>
+    </div>
+  </div>
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Red Legs 3 (Quiz)</div><a href="https://offer.trynurovita.com/rl-adv3" target="_blank" class="funnel-link">offer.trynurovita.com/rl-adv3 &#8599;</a></div>
+      <div class="funnel-type-tag">Quiz</div>
+    </div>
+    <div class="funnel-stats">
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Videos at check</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">New copy live</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#7c3aed">5</div><div class="funnel-stat-lbl">New scripts</div></div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Active items</div>
+      <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c90pxyu" target="_blank">Full woman visible (legs + before/after)</a></div>
+      <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c90pwz4" target="_blank">Failed solutions → switch to avatar</a></div>
+      <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c90pw85" target="_blank">Simple video (easy to recreate)</a></div>
+      <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c90ptux" target="_blank">Nurse and patient interview</a></div>
+      <div class="fi"><span class="sp sp-cwqa">Script QA</span><a href="https://app.clickup.com/t/86c8zdxf2" target="_blank">Nurse story video script</a></div>
+      <div class="fi"><span class="sp sp-production">Production</span><a href="https://app.clickup.com/t/86c8xqd9a" target="_blank">Concept 9 - Red Legs VSL Dupe</a></div>
+      <div class="fi"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+    </div>
+  </div>
+<!-- ##FUNNELS_LIVE_END## -->
+</div>
+
+<!-- READY TO LAUNCH -->
+<div class="section-title" style="display:flex;align-items:center;gap:6px;">
+  <span>Ready to Launch &mdash; US</span>
+</div>
+<div class="grid grid-3">
+<!-- ##FUNNELS_READY_START## -->
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">7 Reasons (Listicle)</div><a href="https://offer.trynurovita.com/7reasons-v1-adv" target="_blank" class="funnel-link">offer.trynurovita.com/7reasons-v1-adv &#8599;</a></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-stats">
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Videos at check</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">New copy live</div></div>
+      <div class="funnel-stat"><div class="funnel-stat-val" style="color:#94a3b8">0</div><div class="funnel-stat-lbl">Scripts / prod</div></div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Active items</div>
+      <div class="fi"><span class="sp sp-todo">—</span><a href="#">No active items</a></div>
+    </div>
+  </div>
+<!-- ##FUNNELS_READY_END## -->
+</div>
+
+<!-- FUNNELS IN BUILD -->
+<div class="section-title" style="display:flex;align-items:center;gap:6px;">
+  <span>Funnels in Build &mdash; US</span>
+</div>
+<div class="grid grid-3">
+<!-- ##FUNNELS_BUILD_START## -->
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Night Cramps</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px;">20/03/26</div></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Status</div>
+      <div class="fi"><span class="sp sp-briefing">Briefing</span><a href="https://app.clickup.com/t/86c8xppr2" target="_blank">Night Cramps - Standard - 20/03/26</a></div>
+    </div>
+  </div>
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Neuropathy Science</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px;">24/03/26</div></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Status</div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8zpne8" target="_blank">Neuropathy Science - Standard - 24/03/26</a></div>
+    </div>
+  </div>
+  <div class="funnel-card">
+    <div class="funnel-head">
+      <div><div class="funnel-name">Lymphatic-dtv1</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px;">25/03/26</div></div>
+      <div class="funnel-type-tag">Standard</div>
+    </div>
+    <div class="funnel-items">
+      <div class="funnel-sub-label">Status</div>
+      <div class="fi"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c90dfmu" target="_blank">Lymphatic-dtv1 - Standard - 25/03/26</a></div>
+    </div>
+  </div>
+<!-- ##FUNNELS_BUILD_END## -->
+</div>
+
+<!-- GOALS TRACKER -->
+<div class="section-title">Weekly &amp; Daily Goals</div>
+<div class="gt-wrap">
+
+  <div class="gt-thead">
+    <div class="gt-th">Team member</div>
+    <div class="gt-th">Daily goal &mdash; Today</div>
+    <div class="gt-th">Weekly goal &mdash; This week (Mon&ndash;Fri)</div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="gt-group-hdr">Video</div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#fee2e2;color:#b91c1c">RL</div><div><div class="gt-name">Raz</div><div class="gt-role-lbl">Video Editor</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in progress</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:raz:daily## -->12<!-- /##GOAL:raz:daily## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:raz:daily:note## -->12 mediabuyer check<!-- /##GOAL:raz:daily:note## --></div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in pipeline (hooks)</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:raz:weekly## -->0<!-- /##GOAL:raz:weekly## --></span><span class="gt-of">/ 15 target</span></div>
+      <div class="gt-note"><!-- ##GOAL:raz:weekly:note## -->No accepted tasks this week<!-- /##GOAL:raz:weekly:note## --></div>
+    </div>
+  </div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#e0f2fe;color:#0369a1">TB</div><div><div class="gt-name">Tesfahun</div><div class="gt-role-lbl">Video Editor</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in progress</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:tesfahun:daily## -->3<!-- /##GOAL:tesfahun:daily## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:tesfahun:daily:note## -->3 revisions<!-- /##GOAL:tesfahun:daily:note## --></div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in pipeline (hooks)</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:tesfahun:weekly## -->3<!-- /##GOAL:tesfahun:weekly## --></span><span class="gt-of">/ 10 target</span></div>
+      <div class="gt-note"><!-- ##GOAL:tesfahun:weekly:note## -->1 accepted task this week → 3 videos<!-- /##GOAL:tesfahun:weekly:note## --></div>
+    </div>
+  </div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#d1fae5;color:#059669">VG</div><div><div class="gt-name">Vladislav</div><div class="gt-role-lbl">Video Editor</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in progress</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:vladislav:daily## -->6<!-- /##GOAL:vladislav:daily## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:vladislav:daily:note## -->3 production • 3 mediabuyer check<!-- /##GOAL:vladislav:daily:note## --></div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos in pipeline (hooks)</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:vladislav:weekly## -->0<!-- /##GOAL:vladislav:weekly## --></span><span class="gt-of">/ 10 target</span></div>
+      <div class="gt-note"><!-- ##GOAL:vladislav:weekly:note## -->No accepted tasks this week<!-- /##GOAL:vladislav:weekly:note## --></div>
+    </div>
+  </div>
+
+  <!-- COPY, FUNNEL & DESIGN -->
+  <div class="gt-group-hdr">Copy, Funnel &amp; Design</div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#ede9fe;color:#6d28d9">MH</div><div><div class="gt-name">Muhammad</div><div class="gt-role-lbl">Copywriter</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Ad copies this week</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:muhammad:daily## -->3<!-- /##GOAL:muhammad:daily## --></span><span class="gt-of">new this week</span></div>
+      <div class="gt-note"><!-- ##GOAL:muhammad:daily:note## -->Compression Socks Susan ad copies 3x 24/03/26 • Nora ad copies set 2 3x 24/03/26 • neuropathy ad copies set 2 26/03/26<!-- /##GOAL:muhammad:daily:note## --></div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Video scripts at QA</div>
+      <div class="gt-nums"><span class="gt-achieved ga-green"><!-- ##GOAL:muhammad:weekly## -->5<!-- /##GOAL:muhammad:weekly## --></span><span class="gt-of">at script QA</span></div>
+      <div class="gt-note"><!-- ##GOAL:muhammad:weekly:note## -->5 scripts at QA • Red (5)<!-- /##GOAL:muhammad:weekly:note## --></div>
+    </div>
+  </div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#dcfce7;color:#15803d">TA</div><div><div class="gt-name">Terie</div><div class="gt-role-lbl">Funnel Builder</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Pages built (all types)</div>
+      <div class="gt-nums"><span class="gt-achieved ga-grey"><!-- ##GOAL:terie:daily## -->—<!-- /##GOAL:terie:daily## --></span><span class="gt-of">/ 2 target</span></div>
+      <div class="gt-note">Advertorial &bull; upsell &bull; downsell &bull; other</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Pages built (all types)</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:terie:weekly## -->4<!-- /##GOAL:terie:weekly## --></span><span class="gt-of">/ 10 target</span></div>
+      <div class="gt-note">Advertorial &bull; upsell &bull; downsell &bull; other</div>
+    </div>
+  </div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#dbeafe;color:#1d4ed8">AM</div><div><div class="gt-name">Alexander</div><div class="gt-role-lbl">Designer</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Photo sets delivered</div>
+      <div class="gt-nums"><span class="gt-achieved ga-grey"><!-- ##GOAL:alexander:daily## -->—<!-- /##GOAL:alexander:daily## --></span><span class="gt-of">/ 2 target</span></div>
+      <div class="gt-note">Update manually each day</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Photo sets delivered</div>
+      <div class="gt-nums"><span class="gt-achieved ga-grey"><!-- ##GOAL:alexander:weekly## -->—<!-- /##GOAL:alexander:weekly## --></span><span class="gt-of">/ 10 target</span></div>
+      <div class="gt-note">Update manually each week</div>
+    </div>
+  </div>
+
+  <!-- ADMINISTRATION -->
+  <div class="gt-group-hdr">Administration</div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#ffedd5;color:#c2410c">SR</div><div><div class="gt-name">Sheena</div><div class="gt-role-lbl">Research &amp; Admin</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Sub-avatars completed</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:sheena:daily## -->0<!-- /##GOAL:sheena:daily## --></span><span class="gt-of">/ 3 target</span></div>
+      <div class="gt-note">KPI alert — none today</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Sub-avatars completed</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:sheena:weekly## -->0<!-- /##GOAL:sheena:weekly## --></span><span class="gt-of">/ 15 target</span></div>
+      <div class="gt-note">KPI alert — none this week</div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div class="gt-group-hdr">Leadership</div>
+
+  <div class="gt-row">
+    <div class="gt-person"><div class="gt-av" style="background:#fef9c3;color:#92400e">MB</div><div><div class="gt-name">Michael</div><div class="gt-role-lbl">Owner</div></div></div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Advertorials written</div>
+      <div class="gt-nums"><span class="gt-achieved ga-grey">—</span><span class="gt-of">no daily target</span></div>
+      <div class="gt-note">Weekly target only</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Advertorials written</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:michael:weekly## -->0<!-- /##GOAL:michael:weekly## --></span><span class="gt-of">/ 4 target</span></div>
+      <div class="gt-note">Focused on automation build this week</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CUSTOMER SUPPORT EOD -->
+<style>
+.cs-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:24px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.cs-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 10px;border-bottom:1px solid #f1f5f9;}
+.cs-card-title{font-size:12px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.5px;}
+.cs-badge{font-size:10px;color:#94a3b8;background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:2px 9px;}
+.cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid #f1f5f9;}
+.cs-metric{padding:14px 18px;border-right:1px solid #f1f5f9;position:relative;}
+.cs-metric:last-child{border-right:none;}
+.cs-metric-label{font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.cs-metric-value{font-size:28px;font-weight:800;line-height:1;margin-bottom:3px;}
+.cs-metric-sub{font-size:10px;color:#94a3b8;line-height:1.4;}
+.cs-metric-sub b{font-weight:600;}
+.cs-kpi-bar{height:3px;background:#f1f5f9;border-radius:2px;margin-top:6px;overflow:hidden;}
+.cs-kpi-fill{height:3px;border-radius:2px;}
+.cs-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:0;font-size:12px;}
+.cs-breakdown-col{padding:12px 18px;}
+.cs-breakdown-col:first-child{border-right:1px solid #f1f5f9;}
+.cs-brow{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f9fafb;}
+.cs-brow:last-child{border-bottom:none;}
+.cs-brow-label{color:#6b7280;}
+.cs-brow-label.cs-indent{padding-left:12px;color:#9ca3af;}
+.cs-brow-val{font-weight:600;color:#374151;}
+.cs-footer{padding:7px 18px;background:#f9fafb;border-top:1px solid #f1f5f9;font-size:10px;color:#9ca3af;}
+</style>
+<div class="section-title">Customer Support — Weekly KPIs (Sam)</div>
+<div class="cs-card">
+  <div class="cs-card-header">
+    <span class="cs-card-title">Sam Colyn · This Week</span>
+    <!-- ##CS_EOD_START## --><span class="cs-badge">5 EOD reports</span><!-- ##CS_EOD_END## -->
+  </div>
+  <div class="cs-metrics">
+    <div class="cs-metric">
+      <div class="cs-metric-label">Refunds</div>
+      <div class="cs-metric-value" style="color:#dc2626"><!-- ##STAT:cs:refunds## -->24<!-- /##STAT:cs:refunds## --></div>
+      <div class="cs-metric-sub">this week</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-label">Chargebacks</div>
+      <div class="cs-metric-value" style="color:#d97706"><!-- ##STAT:cs:chargebacks## -->5<!-- /##STAT:cs:chargebacks## --></div>
+      <div class="cs-metric-sub"><b style="color:#16a34a"><!-- ##STAT:cs:resolution## -->100%<!-- /##STAT:cs:resolution## --></b> resolved</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-label">Subscription Rebills</div>
+      <div class="cs-metric-value" style="color:#7c3aed"><!-- ##STAT:cs:rebills## -->15<!-- /##STAT:cs:rebills## --></div>
+      <div class="cs-metric-sub"><!-- ##STAT:cs:rebills_sub## -->T1: 1 · T2: 13 · T3: 1<!-- /##STAT:cs:rebills_sub## --></div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-label">Tier 1 Acceptance · <span style="color:#94a3b8">KPI 5%</span></div>
+      <div class="cs-metric-value" style="color:<!-- ##STAT:cs:t1_week_color## -->#dc2626<!-- /##STAT:cs:t1_week_color## -->"><!-- ##STAT:cs:t1_week_rate## -->1.4%<!-- /##STAT:cs:t1_week_rate## --></div>
+      <div class="cs-metric-sub"><!-- ##STAT:cs:t1_week_nums## -->1 / 69 offered<!-- /##STAT:cs:t1_week_nums## --> · 30d: <!-- ##STAT:cs:t1_month_rate## -->3.4%<!-- /##STAT:cs:t1_month_rate## --></div>
+      <div class="cs-kpi-bar"><div class="cs-kpi-fill" style="background:<!-- ##STAT:cs:t1_bar_color## -->#dc2626<!-- /##STAT:cs:t1_bar_color## -->;width:<!-- ##STAT:cs:t1_bar_width## -->29%<!-- /##STAT:cs:t1_bar_width## -->"></div></div>
+    </div>
+  </div>
+  <div class="cs-breakdown">
+    <div class="cs-breakdown-col">
+      <!-- ##CS_BREAKDOWN_START## -->
+      <div class="cs-brow"><span class="cs-brow-label">Subscription cancellation</span><span class="cs-brow-val">3</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Order cancellation</span><span class="cs-brow-val">5</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Doesn't want the order</span><span class="cs-brow-val">4</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Partial refund <span style="color:#9ca3af">(= T2 rebill)</span></span><span class="cs-brow-val">11</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Not satisfied</span><span class="cs-brow-val">0</span></div>
+      <!-- ##CS_BREAKDOWN_END## -->
+    </div>
+    <div class="cs-breakdown-col">
+      <!-- ##CS_BREAKDOWN2_START## -->
+      <div class="cs-brow"><span class="cs-brow-label">Rebill T1 (60-day switch)</span><span class="cs-brow-val">1</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Rebill T2 (50% refund)</span><span class="cs-brow-val">13</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Rebill T3 (full refund)</span><span class="cs-brow-val">1</span></div>
+      <div class="cs-brow"><span class="cs-brow-label">Roller offers sent</span><span class="cs-brow-val">0</span></div>
+      <!-- ##CS_BREAKDOWN2_END## -->
+    </div>
+  </div>
+  <div class="cs-footer">Auto-updated from #sam-customer-support-eod · last refresh: <!-- ##STAT:timestamp## -->—<!-- /##STAT:timestamp## --></div>
+</div>
+
+<!-- WORKLOAD TRACKER -->
+<div class="section-title" id="wl-section-toggle" onclick="toggleWorkload()" style="display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;"><span>Team Workload &mdash; Click to open profile</span><span id="wl-section-arrow" style="font-size:8px;letter-spacing:0;">&#9660;</span></div>
+<div class="wl-grid" id="wl-section">
+<!-- ##WL_START## -->
+    <div class="wl-card wl-low" onclick="openModal('terie')">
+      <div class="wl-av" style="background:#dcfce7;color:#15803d">T</div>
+      <div class="wl-name">Terie</div><div class="wl-role">Funnel Builder</div>
+      <div class="wl-count">3</div><div class="wl-lbl">Active</div><div class="wl-hours"><span class="hrs-tw">34.0h</span><span class="hrs-lw" style="display:none">35.4h</span></div>
+    </div>
+    <div class="wl-card wl-high" onclick="openModal('muhammad')">
+      <div class="wl-av" style="background:#ede9fe;color:#6d28d9">M</div>
+      <div class="wl-name">Muhammad</div><div class="wl-role">Copywriter</div>
+      <div class="wl-count">11</div><div class="wl-lbl">High load</div>
+    </div>
+    <div class="wl-card wl-medium" onclick="openModal('raz')">
+      <div class="wl-av" style="background:#fee2e2;color:#b91c1c">R</div>
+      <div class="wl-name">Raz</div><div class="wl-role">Video Editor</div>
+      <div class="wl-count">4</div><div class="wl-lbl">Active</div>
+    </div>
+    <div class="wl-card wl-low" onclick="openModal('tesfahun')">
+      <div class="wl-av" style="background:#e0f2fe;color:#0369a1">T</div>
+      <div class="wl-name">Tesfahun</div><div class="wl-role">Video Editor</div>
+      <div class="wl-count">2</div><div class="wl-lbl">Active</div>
+    </div>
+    <div class="wl-card wl-low" onclick="openModal('vladislav')">
+      <div class="wl-av" style="background:#d1fae5;color:#059669">V</div>
+      <div class="wl-name">Vladislav</div><div class="wl-role">Video Editor</div>
+      <div class="wl-count">2</div><div class="wl-lbl">Active</div>
+    </div>
+    <div class="wl-card wl-high" onclick="openModal('stefan')">
+      <div class="wl-av" style="background:#e0e7ff;color:#4338ca">S</div>
+      <div class="wl-name">Stefan</div><div class="wl-role">Media Buyer</div>
+      <div class="wl-count">12</div><div class="wl-lbl">High load</div>
+    </div>
+    <div class="wl-card wl-medium" onclick="openModal('marjorie')">
+      <div class="wl-av" style="background:#e0f2fe;color:#0284c7">M</div>
+      <div class="wl-name">Marjorie</div><div class="wl-role">Tech & Dashboard</div>
+      <div class="wl-count">5</div><div class="wl-lbl">Active</div>
+    </div>
+    <div class="wl-card wl-high" onclick="openModal('michael')">
+      <div class="wl-av" style="background:#fef9c3;color:#92400e">M</div>
+      <div class="wl-name">Michael</div><div class="wl-role">Owner</div>
+      <div class="wl-count">8</div><div class="wl-lbl">High load</div>
+    </div>
+  <div class="wl-divider"></div>
+    <div class="wl-card wl-none" onclick="openModal('alexander')">
+      <div class="wl-av" style="background:#dbeafe;color:#1d4ed8">A</div>
+      <div class="wl-name">Alexander</div><div class="wl-role">Designer</div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">26.5h</span><span class="hrs-lw" style="display:none">41.4h</span></div>
+    </div>
+    <div class="wl-card wl-none" onclick="openModal('sam')">
+      <div class="wl-av" style="background:#ccfbf1;color:#0f766e">S</div>
+      <div class="wl-name">Sam</div><div class="wl-role">Support</div>
+      <div class="wl-count">0</div><div class="wl-lbl">Outreaching</div><div class="wl-hours"><span class="hrs-tw">39.2h</span><span class="hrs-lw" style="display:none">43.6h</span></div>
+    </div>
+    <div class="wl-card wl-none" onclick="openModal('sheena')">
+      <div class="wl-av" style="background:#ffedd5;color:#c2410c">S</div>
+      <div class="wl-name">Sheena</div><div class="wl-role">Research</div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">30.3h</span><span class="hrs-lw" style="display:none">35.6h</span></div>
+    </div>
+    <div class="wl-card wl-none" onclick="openModal('jerome')">
+      <div class="wl-av" style="background:#fdf4ff;color:#a21caf">J</div>
+      <div class="wl-name">Jerome</div><div class="wl-role">Ad Research</div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">18.7h</span><span class="hrs-lw" style="display:none">20.3h</span></div>
+    </div>
+    <div class="wl-card wl-none" onclick="openModal('natalia')">
+      <div class="wl-av" style="background:#faf5ff;color:#7c3aed">N</div>
+      <div class="wl-name">Natalia</div><div class="wl-role">Operations / CoS</div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div>
+    </div>
+    <div class="wl-card wl-none" onclick="openModal('hajera')">
+      <div class="wl-av" style="background:#f1f5f9;color:#475569">H</div>
+      <div class="wl-name">Hajera</div><div class="wl-role">QA</div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div>
+    </div>
+<!-- ##WL_END## -->
+</div>
+
+<!-- TEAM KPI CARDS -->
+<div class="section-title" style="display:flex;align-items:center;"><span>Team KPIs &mdash; Click name for full details</span><div class="week-toggle"><button id="btn-tw" class="active" onclick="toggleWeek('this')">THIS WEEK</button><button id="btn-lw" onclick="toggleWeek('last')">LAST WEEK</button></div></div>
+
+<!-- VIDEO -->
+<div class="group-label">Video</div>
+<div class="grid grid-3">
+
+  <!-- RAZ -->
+  <div class="tc tc-warn">
+    <div class="tc-head" onclick="openModal('raz')">
+      <div class="av" style="background:#fee2e2;color:#b91c1c">RL</div>
+      <div><div class="tc-name">Raz Llamas</div><div class="tc-role">Video Editor</div></div>
+      <div class="tc-right">
+        <span class="badge green">Active</span>
+        <button class="tasks-toggle" data-person="raz" onclick="event.stopPropagation();toggleTasks(this)">4 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:raz:START## -->
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8z64q0" target="_blank">Furosemide Animation 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
+<!-- ##TP:raz:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Videos in pipeline</span><span class="kpi-value kv-g">12 videos (4 tasks &times; 3 hooks)</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Pipeline status</span><span class="kpi-value kv-w">4 at media buyer check &mdash; awaiting Stefan</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Revision rounds cap</span><span class="kpi-value kv-y">Not defined</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Animation method (JSON)</span><span class="kpi-value kv-y">Not yet consistent</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">Revision cap: decision needed</span></div>
+  </div>
+
+  <!-- TESFAHUN -->
+  <div class="tc tc-ok">
+    <div class="tc-head" onclick="openModal('tesfahun')">
+      <div class="av" style="background:#e0f2fe;color:#0369a1">TB</div>
+      <div><div class="tc-name">Tesfahun Bekele</div><div class="tc-role">Video Editor</div></div>
+      <div class="tc-right">
+        <span class="badge blue">Active</span>
+        <button class="tasks-toggle" data-person="tesfahun" onclick="event.stopPropagation();toggleTasks(this)">2 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:tesfahun:START## -->
+      <div class="ti"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm09u" target="_blank">Furosemide &quot;THE RANKING&quot; Format</a></div>
+<!-- ##TP:tesfahun:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Videos in pipeline</span><span class="kpi-value kv-g">6 videos (2 tasks &times; 3 hooks)</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Pipeline status</span><span class="kpi-value kv-w">Both at media buyer check &mdash; awaiting Stefan</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Formal KPIs</span><span class="kpi-value kv-y">TBD with Michael (trial)</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">Trial — formal KPIs to be set</span></div>
+  </div>
+
+  <!-- VLADISLAV -->
+  <div class="tc tc-ok">
+    <div class="tc-head" onclick="openModal('vladislav')">
+      <div class="av" style="background:#d1fae5;color:#059669">VG</div>
+      <div><div class="tc-name">Vladislav Glisic</div><div class="tc-role">Video Editor</div></div>
+      <div class="tc-right">
+        <span class="badge green">Active</span>
+        <button class="tasks-toggle" data-person="vladislav" onclick="event.stopPropagation();toggleTasks(this)">2 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:vladislav:START## -->
+      <div class="ti"><span class="sp sp-production">Production</span><a href="https://app.clickup.com/t/86c8xqd9a" target="_blank">Concept 9 - Red Legs VSL Dupe</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
+<!-- ##TP:vladislav:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Videos in pipeline</span><span class="kpi-value kv-g">6 videos (2 tasks &times; 3 hooks)</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Pipeline status</span><span class="kpi-value kv-w">1 production &bull; 1 media buyer check</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Formal KPIs</span><span class="kpi-value kv-y">TBD &mdash; paid per hour</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">KPIs TBD — define expected output per hour</span></div>
+  </div>
+
+</div>
+
+<!-- COPY, FUNNEL & DESIGN -->
+<div class="group-label">Copy, Funnel &amp; Design</div>
+<div class="grid grid-3">
+
+  <!-- MUHAMMAD -->
+  <div class="tc tc-warn">
+    <div class="tc-head" onclick="openModal('muhammad')">
+      <div class="av" style="background:#ede9fe;color:#6d28d9">MH</div>
+      <div><div class="tc-name">Muhammad Hameed</div><div class="tc-role">Copywriter / Scriptwriter</div></div>
+      <div class="tc-right">
+        <span class="badge green">Active</span>
+        <button class="tasks-toggle" data-person="muhammad" onclick="event.stopPropagation();toggleTasks(this)">11 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:muhammad:START## -->
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pxyu" target="_blank">Full woman visible (legs + before/after)</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pwz4" target="_blank">Failed solutions → switch to avatar</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90pw85" target="_blank">Simple video (easy to recreate)</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90ptux" target="_blank">Nurse and patient interview</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8zdxf2" target="_blank">Nurse story video script</a></div>
+      <div class="ti"><span class="sp sp-production">Production</span><a href="https://app.clickup.com/t/86c8xqd9a" target="_blank">Concept 9 - Red Legs VSL Dupe</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
+      <div class="ti"><span class="sp sp-revisions">Revisions</span><a href="https://app.clickup.com/t/86c8vm1x1" target="_blank">Concept 9 - Red Legs VSL</a></div>
+<!-- ##TP:muhammad:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Scripts + copies / week</span><span class="kpi-value kv-y">8 in pipeline &mdash; target: 20</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Copy&ndash;advertorial alignment</span><span class="kpi-value kv-r">100% required — monitor</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Script turnaround</span><span class="kpi-value kv-y">Not defined</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge red">#1 alignment risk</span><span class="badge yellow">Script SLA needed</span></div>
+  </div>
+
+  <!-- TERIE -->
+  <div class="tc tc-alert">
+    <div class="tc-head" onclick="openModal('terie')">
+      <div class="av" style="background:#dcfce7;color:#15803d">TA</div>
+      <div><div class="tc-name">Terie Abenes</div><div class="tc-role">Funnel Builder</div></div>
+      <div class="tc-right">
+        <span class="badge red">KPI Alert</span>
+        <button class="tasks-toggle" data-person="terie" onclick="event.stopPropagation();toggleTasks(this)">3 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:terie:START## -->
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c90dfmu" target="_blank">Lymphatic-dtv1 - Standard - 25/03/26</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8zpne8" target="_blank">Neuropathy Science - Standard - 24/03/26</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8xppr2" target="_blank">Night Cramps - Standard - 20/03/26</a></div>
+<!-- ##TP:terie:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:terie:START## --><span class="hrs-tw"><span class="kv-g">34.0h</span><span class="hrs-bar"><span class="hrs-fill" style="width:85%;background:#16a34a"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">35.4h</span><span class="hrs-bar"><span class="hrs-fill" style="width:88%;background:#16a34a"></span></span></span><!-- ##HRS:terie:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Pages built / day</span><span class="kpi-value kv-r">4 this week &mdash; target: 10</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Page types</span><span class="kpi-value kv-w">Advertorial &bull; Upsell &bull; Downsell</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Page consistency check</span><span class="kpi-value kv-g">100% when active</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Duplicate upsell page</span><span class="kpi-value kv-g">&lt; 5 min</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge red">4 / 10 pages this week</span><span class="badge yellow">CC save lag</span></div>
+  </div>
+
+  <!-- ALEXANDER -->
+  <div class="tc tc-ok">
+    <div class="tc-head" onclick="openModal('alexander')">
+      <div class="av" style="background:#dbeafe;color:#1d4ed8">AM</div>
+      <div><div class="tc-name">Alexander (Aleksandar)</div><div class="tc-role">Designer</div></div>
+      <div class="tc-right">
+        <span class="badge grey">No Active Tasks</span>
+        <button class="tasks-toggle" data-person="alexander" onclick="event.stopPropagation();toggleTasks(this)">0 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:alexander:START## -->
+      <div class="no-tasks-msg">No active tasks found.</div>
+<!-- ##TP:alexander:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:alexander:START## --><span class="hrs-tw"><span class="kv-y">26.5h</span><span class="hrs-bar"><span class="hrs-fill" style="width:66%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">41.4h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:alexander:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Photo sets / day</span><span class="kpi-value kv-g">2 sets target &mdash; on track</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Character consistency</span><span class="kpi-value kv-g">0 inconsistencies</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Revision rounds</span><span class="kpi-value kv-y">Target: 0</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge blue">Decision: CC access?</span></div>
+  </div>
+
+</div>
+
+<!-- MEDIA BUYING -->
+<div class="group-label">Media Buying</div>
+<div class="grid grid-3">
+
+  <!-- STEFAN -->
+  <div class="tc tc-warn">
+    <div class="tc-head" onclick="openModal('stefan')">
+      <div class="av" style="background:#e0e7ff;color:#4338ca">SM</div>
+      <div><div class="tc-name">Stefan Milovanovic</div><div class="tc-role">Media Buyer</div></div>
+      <div class="tc-right">
+        <span class="badge green">Active</span>
+        <button class="tasks-toggle" data-person="stefan" onclick="event.stopPropagation();toggleTasks(this)">12 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:stefan:START## -->
+      <div class="ti"><span class="sp sp-media">Media Check</span><a href="https://app.clickup.com/t/86c8zx8cg" target="_blank">Red Legs V3 - Standard - 24/03/26</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8z64q0" target="_blank">Furosemide Animation 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8xppr2" target="_blank">Night Cramps - Standard - 20/03/26</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x7pr6" target="_blank">UGC Furosemide 4</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8x13uw" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8wh4mb" target="_blank">UGC Furosemide 3</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vrfwc" target="_blank">Concept 10: Furosemide VSL (SwellClear Mimic)</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8vm09u" target="_blank">Furosemide &quot;THE RANKING&quot; Format</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8tzjqu" target="_blank">7reasons (Listicle) Standard 13/03/2026</a></div>
+      <div class="ti"><span class="sp sp-ready">Ready</span><a href="https://app.clickup.com/t/86c8np92h" target="_blank">Blood pressure medicine (Lisinopril) + ankle/leg swelling</a></div>
+      <div class="ti"><span class="sp sp-ready">Ready</span><a href="https://app.clickup.com/t/86c8np8r6" target="_blank">Post surgery (Hip/Knee) + Leg swelling</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c839qkq" target="_blank">Daily update FB ad Tracker and Notify Marjorie</a></div>
+<!-- ##TP:stefan:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Media buyer check before launch</span><span class="kpi-value kv-g">Active &mdash; 7 videos + 1 WW funnel at check</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Audience testing</span><span class="kpi-value kv-g">7 angles in testing</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Live funnels monitored</span><span class="kpi-value kv-g">3 US + 2 WW</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">High task volume &mdash; monitor bandwidth</span></div>
+  </div>
+
+</div>
+
+<!-- OPERATIONS & TECH -->
+<div class="group-label">Operations &amp; Tech</div>
+<div class="grid grid-3">
+
+  <!-- MARJORIE -->
+  <div class="tc tc-warn">
+    <div class="tc-head" onclick="openModal('marjorie')">
+      <div class="av" style="background:#e0f2fe;color:#0284c7">MV</div>
+      <div><div class="tc-name">Marjorie</div><div class="tc-role">Dashboard &amp; Tech</div></div>
+      <div class="tc-right">
+        <span class="badge yellow">Sprint Undefined</span>
+        <button class="tasks-toggle" data-person="marjorie" onclick="event.stopPropagation();toggleTasks(this)">5 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:marjorie:START## -->
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8j5229" target="_blank">Update weekly COGS table</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8j51v0" target="_blank">Please disable inactive funnels on checkout-chemp</a></div>
+      <div class="ti"><span class="sp sp-inprog">In Progress</span><a href="https://app.clickup.com/t/86c8dg14n" target="_blank">Customer portal</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c853nqt" target="_blank">Check that all FB accounts integrated in our database</a></div>
+      <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c6xkdxy" target="_blank">1Password Clean-up</a></div>
+<!-- ##TP:marjorie:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:marjorie:START## --><span class="kv-w">—</span><!-- ##HRS:marjorie:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Sprint priorities</span><span class="kpi-value kv-y">Not defined by Michael</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Customer portal</span><span class="kpi-value kv-g">In progress</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">Sprint priorities needed</span><span class="badge blue">Milestone KPIs recommended</span></div>
+  </div>
+
+  <!-- NATALIA -->
+  <div class="tc">
+    <div class="tc-head" onclick="openModal('natalia')">
+      <div class="av" style="background:#faf5ff;color:#7c3aed">N</div>
+      <div><div class="tc-name">Natalia</div><div class="tc-role">Operations / CoS</div></div>
+      <div class="tc-right"><span class="badge grey">No Tasks</span></div>
+    </div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>KPIs not defined</span><span class="kpi-value kv-y">Ops role — needs setup</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge grey">No active tasks in space</span></div>
+  </div>
+
+  <!-- HAJERA -->
+  <div class="tc">
+    <div class="tc-head" onclick="openModal('hajera')">
+      <div class="av" style="background:#f1f5f9;color:#475569">HW</div>
+      <div><div class="tc-name">Hajera</div><div class="tc-role">QA</div></div>
+      <div class="tc-right"><span class="badge grey">No Tasks</span></div>
+    </div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:hajera:START## --><span class="kv-w">—</span><!-- ##HRS:hajera:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>KPIs not defined</span><span class="kpi-value kv-y">QA role — needs setup</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge grey">No active tasks in space</span></div>
+  </div>
+
+</div>
+
+<!-- CUSTOMER SUPPORT -->
+<div class="group-label">Customer Support</div>
+<div class="grid grid-3">
+
+  <!-- SAM -->
+  <div class="tc tc-ok">
+    <div class="tc-head" onclick="openModal('sam')">
+      <div class="av" style="background:#ccfbf1;color:#0f766e">SC</div>
+      <div><div class="tc-name">Sam</div><div class="tc-role">Customer Support</div></div>
+      <div class="tc-right"><span class="badge green">Active</span></div>
+    </div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:sam:START## --><span class="hrs-tw"><span class="kv-g">39.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:98%;background:#16a34a"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">43.6h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:sam:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot <!-- ##STAT:sam:cb_dot## -->dot-g<!-- /##STAT:sam:cb_dot## -->"></span>ChargeBlast resolved same-day</span><span class="kpi-value <!-- ##STAT:sam:cb_kv## -->kv-g<!-- /##STAT:sam:cb_kv## -->"><!-- ##STAT:sam:cb_val## -->100% resolved (5 alerts)<!-- /##STAT:sam:cb_val## --></span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot <!-- ##STAT:sam:t1_dot## -->dot-r<!-- /##STAT:sam:t1_dot## -->"></span>Tier 1 acceptance · KPI 5%</span><span class="kpi-value <!-- ##STAT:sam:t1_kv## -->kv-r<!-- /##STAT:sam:t1_kv## -->"><!-- ##STAT:sam:t1_val## -->1.4% this week · 3.4% (30d)<!-- /##STAT:sam:t1_val## --></span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Refunds this week</span><span class="kpi-value <!-- ##STAT:sam:ref_kv## -->kv-r<!-- /##STAT:sam:ref_kv## -->"><!-- ##STAT:sam:ref_val## -->24 refunds this week<!-- /##STAT:sam:ref_val## --></span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Trustpilot / month</span><span class="kpi-value kv-g">5+ target</span></div>
+    </div>
+    <!-- ##STAT:sam:flag_start## --><div class="tc-flags"><span class="badge yellow">Tier 1 at 1.4% this week — KPI target: 5%</span></div><!-- ##STAT:sam:flag_end## -->
+  </div>
+
+</div>
+
+<!-- ADMINISTRATION -->
+<div class="group-label">Administration</div>
+<div class="grid grid-3">
+
+  <!-- SHEENA -->
+  <div class="tc tc-alert">
+    <div class="tc-head" onclick="openModal('sheena')">
+      <div class="av" style="background:#ffedd5;color:#c2410c">SR</div>
+      <div><div class="tc-name">Sheena Grace Ragay</div><div class="tc-role">Research &amp; Admin</div></div>
+      <div class="tc-right"><span class="badge red">KPI Alert</span></div>
+    </div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:sheena:START## --><span class="hrs-tw"><span class="kv-y">30.3h</span><span class="hrs-bar"><span class="hrs-fill" style="width:76%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">35.6h</span><span class="hrs-bar"><span class="hrs-fill" style="width:89%;background:#16a34a"></span></span></span><!-- ##HRS:sheena:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Sub-avatars / day</span><span class="kpi-value kv-r">0 today &mdash; target: 3</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Sub-avatars / batch</span><span class="kpi-value kv-y">9 minimum</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Invoice / admin SLA</span><span class="kpi-value kv-y">Not defined</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge red">No active research tasks</span><span class="badge yellow">Set admin SLA</span></div>
+  </div>
+
+
+
+  <!-- JEROME -->
+  <div class="tc tc-warn">
+    <div class="tc-head" onclick="openModal('jerome')">
+      <div class="av" style="background:#fdf4ff;color:#a21caf">JR</div>
+      <div><div class="tc-name">Jerome Rafallo</div><div class="tc-role">Competitor &amp; Ad Research</div></div>
+      <div class="tc-right">
+        <span class="badge yellow">Monitor</span>
+        <button class="tasks-toggle" data-person="jerome" onclick="event.stopPropagation();toggleTasks(this)">0 tasks <span class="arrow">&#9660;</span></button>
+      </div>
+    </div>
+    <div class="tasks-panel"><!-- ##TP:jerome:START## -->
+      <div class="no-tasks-msg">No active tasks found.</div>
+<!-- ##TP:jerome:END## --></div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:jerome:START## --><span class="hrs-tw"><span class="kv-g">18.7h</span><span class="hrs-bar"><span class="hrs-fill" style="width:93%;background:#16a34a"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">20.3h</span><span class="hrs-bar"><span class="hrs-fill" style="width:100%;background:#16a34a"></span></span></span><!-- ##HRS:jerome:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Daily swipes</span><span class="kpi-value kv-g">Ads 3+ &bull; VSLs 2+ &bull; Quiz 1 &mdash; &#x2705;</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Upsell swipes / week</span><span class="kpi-value kv-r">2&ndash;3 / week &mdash; min 5 &#x26A0;</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Weekly deliverables</span><span class="kpi-value kv-g">Friday report &#x2705; &bull; Sheet same-day &#x2705;</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge red">Upsell swipes: 2&ndash;3/week &mdash; below Michael&apos;s min of 5</span></div>
+  </div>
+
+</div>
+
+
+<!-- LEADERSHIP -->
+<div class="group-label">Leadership</div>
+<div class="grid grid-3">
+
+  <!-- MICHAEL -->
+  <div class="tc tc-alert">
+    <div class="tc-head" onclick="openModal('michael')">
+      <div class="av" style="background:#fef9c3;color:#92400e">MB</div>
+      <div><div class="tc-name">Michael B</div><div class="tc-role">Owner / Advertorial Writer</div></div>
+      <div class="tc-right"><span class="badge red">KPI Alert</span></div>
+    </div>
+    <div class="tc-kpis">
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:michael:START## --><span class="kv-w">—</span><!-- ##HRS:michael:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Advertorials / week</span><span class="kpi-value kv-r">0 active &mdash; target: 4</span></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Final launch approval</span><span class="kpi-value kv-g">100% required</span></div>
+    </div>
+    <div class="tc-flags"><span class="badge yellow">Focused on automation build</span><span class="badge blue">Russell as backup</span></div>
+  </div>
+
+</div>
+
+
+<p style="font-size:10px;color:#94a3b8;margin-top:24px;text-align:center;">Nurovita Internal Dashboard &mdash; Mar 19, 2026</p>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal" onclick="closeModalOnBg(event)">
+  <div class="modal-drawer" id="modal-drawer">
+    <div class="modal-header">
+      <div class="modal-av" id="m-av"></div>
+      <div><div class="modal-name" id="m-name"></div><div class="modal-role" id="m-role"></div></div>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
+</div>
+
+<script>
+const people = {
+  terie: {
+    name:"Terie Abenes", role:"Funnel Builder", initials:"TA",
+    avBg:"#dcfce7", avColor:"#15803d", status:"alert",
+    /* ##TASKS:terie:START## */tasks:[
+      {sp:"sp-todo", label:"Lymphatic-dtv1 - Standard - 25/03/26", url:"https://app.clickup.com/t/86c90dfmu"},
+      {sp:"sp-todo", label:"Neuropathy Science - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zpne8"},
+      {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
+    ],/* ##TASKS:terie:END## */
+    hours: /* ##HOURS:terie## */34.0/* /##HOURS:terie## */, hoursLw: /* ##HOURSLW:terie## */35.4/* /##HOURSLW:terie## */,
+    kpis:[
+      {dot:"r", label:"Pages built / week", value:"4 this week — target: 10", vc:"kv-r"},
+      {dot:"r", label:"Pages built / day", value:"target: 2/day", vc:"kv-y"},
+      {dot:"g", label:"Page types tracked", value:"Advertorial · Upsell · Downsell", vc:"kv-w"},
+      {dot:"g", label:"Time per advertorial", value:"2–3 hrs", vc:"kv-w"},
+      {dot:"g", label:"Time per upsell/downsell", value:"1–2 hrs", vc:"kv-w"},
+      {dot:"g", label:"Duplicate upsell page", value:"< 5 min", vc:"kv-g"},
+      {dot:"g", label:"Sales page consistency", value:"100% when active", vc:"kv-g"},
+    ],
+    flags:[
+      {type:"yellow", text:"KPI target needs redefining — count all page types (advertorial, upsell, downsell), not advertorials only"},
+      {type:"yellow", text:"CheckoutChamp saves slowly (30s–1min each) — hidden time cost"},
+      {type:"yellow", text:"Output depends on Alexander delivering photos first (TZ gap)"},
+    ]
+  },
+  alexander: {
+    name:"Aleksandar Mihailovic", role:"Designer", initials:"AM",
+    avBg:"#dbeafe", avColor:"#1d4ed8", status:"ok",
+    /* ##TASKS:alexander:START## */tasks:[],/* ##TASKS:alexander:END## */
+    hours: /* ##HOURS:alexander## */26.5/* /##HOURS:alexander## */, hoursLw: /* ##HOURSLW:alexander## */41.4/* /##HOURSLW:alexander## */,
+    kpis:[
+      {dot:"g", label:"Photo sets / day", value:"2 sets (~20 photos)", vc:"kv-g"},
+      {dot:"g", label:"Simple animation", value:"~10 min", vc:"kv-w"},
+      {dot:"g", label:"Complex animation (Premiere)", value:"~30 min", vc:"kv-w"},
+      {dot:"g", label:"Stefan ad set / angle", value:"30–40 min", vc:"kv-w"},
+      {dot:"y", label:"Revision rounds", value:"0 target (first-time right)", vc:"kv-y"},
+      {dot:"g", label:"Character consistency", value:"0 inconsistencies", vc:"kv-g"},
+    ],
+    flags:[
+      {type:"blue",   text:"Open decision: CC access for photo swaps to reduce TZ delay with Terie"},
+      {type:"yellow", text:"When revisions needed on live advertorial, must wait for Terie (TZ gap)"},
+    ]
+  },
+  muhammad: {
+    name:"Muhammad Hameed", role:"Copywriter / Scriptwriter", initials:"MH",
+    avBg:"#ede9fe", avColor:"#6d28d9", status:"warn",
+    /* ##TASKS:muhammad:START## */tasks:[
+      {sp:"sp-todo", label:"Full woman visible (legs + before/after)", url:"https://app.clickup.com/t/86c90pxyu"},
+      {sp:"sp-todo", label:"Failed solutions → switch to avatar", url:"https://app.clickup.com/t/86c90pwz4"},
+      {sp:"sp-todo", label:"Simple video (easy to recreate)", url:"https://app.clickup.com/t/86c90pw85"},
+      {sp:"sp-todo", label:"Nurse and patient interview", url:"https://app.clickup.com/t/86c90ptux"},
+      {sp:"sp-todo", label:"Nurse story video script", url:"https://app.clickup.com/t/86c8zdxf2"},
+      {sp:"sp-production", label:"Concept 9 - Red Legs VSL Dupe", url:"https://app.clickup.com/t/86c8xqd9a"},
+      {sp:"sp-todo", label:"UGC Furosemide 4", url:"https://app.clickup.com/t/86c8x7pr6"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe", url:"https://app.clickup.com/t/86c8x13uw"},
+      {sp:"sp-todo", label:"UGC Furosemide 3", url:"https://app.clickup.com/t/86c8wh4mb"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic)", url:"https://app.clickup.com/t/86c8vrfwc"},
+      {sp:"sp-revisions", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
+    ],/* ##TASKS:muhammad:END## */
+    hours: null,
+    kpis:[
+      {dot:"g", label:"Ad copies / day", value:"4 target", vc:"kv-g"},
+      {dot:"g", label:"Ad copies / week", value:"~20 target", vc:"kv-g"},
+      {dot:"r", label:"Copy–advertorial alignment", value:"100% required — monitor closely", vc:"kv-r"},
+      {dot:"g", label:"Copy variations per live funnel", value:"Ongoing", vc:"kv-w"},
+      {dot:"y", label:"Script turnaround (UGC/animation)", value:"Not defined — needs decision", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"red",    text:"#1 pipeline risk — disconnected copies caused zero-revenue period twice"},
+      {type:"yellow", text:"Script turnaround SLA not defined for UGC and animation scripts"},
+      {type:"blue",   text:"4 Neuropathy audience tasks on hold — waiting for listicle build before action needed"},
+    ]
+  },
+  raz: {
+    name:"Raz Llamas", role:"Video Editor", initials:"RL",
+    avBg:"#fee2e2", avColor:"#b91c1c", status:"warn",
+    /* ##TASKS:raz:START## */tasks:[
+      {sp:"sp-todo", label:"Furosemide Animation 3", url:"https://app.clickup.com/t/86c8z64q0"},
+      {sp:"sp-todo", label:"UGC Furosemide 4", url:"https://app.clickup.com/t/86c8x7pr6"},
+      {sp:"sp-todo", label:"UGC Furosemide 3", url:"https://app.clickup.com/t/86c8wh4mb"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic)", url:"https://app.clickup.com/t/86c8vrfwc"},
+    ],/* ##TASKS:raz:END## */
+    hours: null,
+    kpis:[
+      {dot:"g", label:"Videos in pipeline", value:"9 videos (3 tasks × 3 hooks)", vc:"kv-g"},
+      {dot:"g", label:"Pipeline status", value:"1 production · 2 revisions", vc:"kv-w"},
+      {dot:"g", label:"Revision turnaround", value:"Same day (before noon)", vc:"kv-g"},
+      {dot:"y", label:"Revision rounds cap", value:"Not defined — needs decision", vc:"kv-y"},
+      {dot:"y", label:"Animation method (JSON first-last-frame)", value:"Not yet consistent", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"Revision round cap per video not defined — important for fixed-rate billing"},
+      {type:"yellow", text:"JSON animation method not consistently applied — may need reassignment"},
+    ]
+  },
+  tesfahun: {
+    name:"Tesfahun Bekele", role:"Video Editor", initials:"TB",
+    avBg:"#e0f2fe", avColor:"#0369a1", status:"ok",
+    /* ##TASKS:tesfahun:START## */tasks:[
+      {sp:"sp-revisions", label:"Concept 9 - Red Legs VSL", url:"https://app.clickup.com/t/86c8vm1x1"},
+      {sp:"sp-todo", label:"Furosemide \"THE RANKING\" Format", url:"https://app.clickup.com/t/86c8vm09u"},
+    ],/* ##TASKS:tesfahun:END## */
+    hours: null,
+    kpis:[
+      {dot:"g", label:"Videos in pipeline", value:"6 videos (2 tasks × 3 hooks)", vc:"kv-g"},
+      {dot:"g", label:"Pipeline status", value:"1 revisions · 1 production", vc:"kv-w"},
+      {dot:"y", label:"KPIs — on trial, first week", value:"TBD with Michael", vc:"kv-y"},
+      {dot:"y", label:"Paid per minute", value:"Output vs time ratio TBD", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"First week / trial — KPIs to be set with Michael. Paid per minute, so output/time ratio is key metric"},
+    ]
+  },
+  vladislav: {
+    name:"Vladislav Glisic", role:"Video Editor", initials:"VG",
+    avBg:"#d1fae5", avColor:"#059669", status:"ok",
+    /* ##TASKS:vladislav:START## */tasks:[
+      {sp:"sp-production", label:"Concept 9 - Red Legs VSL Dupe", url:"https://app.clickup.com/t/86c8xqd9a"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe", url:"https://app.clickup.com/t/86c8x13uw"},
+    ],/* ##TASKS:vladislav:END## */
+    hours: null,
+    kpis:[
+      {dot:"g", label:"Videos in pipeline", value:"6 videos (2 tasks × 3 hooks)", vc:"kv-g"},
+      {dot:"g", label:"Pipeline status", value:"2 production", vc:"kv-w"},
+      {dot:"y", label:"Paid per hour — deliveries tracked", value:"Expected output per hour TBD", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"KPIs TBD — paid per hour, tracked by deliveries. Need to define expected output per hour with Michael"},
+    ]
+  },
+  stefan: {
+    name:"Stefan Milovanovic", role:"Media Buyer", initials:"SM",
+    avBg:"#e0e7ff", avColor:"#4338ca", status:"warn",
+    /* ##TASKS:stefan:START## */tasks:[
+      {sp:"sp-media", label:"Red Legs V3 - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zx8cg"},
+      {sp:"sp-todo", label:"Furosemide Animation 3", url:"https://app.clickup.com/t/86c8z64q0"},
+      {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
+      {sp:"sp-todo", label:"UGC Furosemide 4", url:"https://app.clickup.com/t/86c8x7pr6"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic) - Dupe", url:"https://app.clickup.com/t/86c8x13uw"},
+      {sp:"sp-todo", label:"UGC Furosemide 3", url:"https://app.clickup.com/t/86c8wh4mb"},
+      {sp:"sp-todo", label:"Concept 10: Furosemide VSL (SwellClear Mimic)", url:"https://app.clickup.com/t/86c8vrfwc"},
+      {sp:"sp-todo", label:"Furosemide \"THE RANKING\" Format", url:"https://app.clickup.com/t/86c8vm09u"},
+      {sp:"sp-todo", label:"7reasons (Listicle) Standard 13/03/2026", url:"https://app.clickup.com/t/86c8tzjqu"},
+      {sp:"sp-ready", label:"Blood pressure medicine (Lisinopril) + ankle/leg swelling", url:"https://app.clickup.com/t/86c8np92h"},
+      {sp:"sp-ready", label:"Post surgery (Hip/Knee) + Leg swelling", url:"https://app.clickup.com/t/86c8np8r6"},
+      {sp:"sp-todo", label:"Daily update FB ad Tracker and Notify Marjorie", url:"https://app.clickup.com/t/86c839qkq"},
+    ],/* ##TASKS:stefan:END## */
+    hours: null,
+    kpis:[
+      {dot:"g", label:"Media buyer check before launch", value:"2 funnels at final check", vc:"kv-g"},
+      {dot:"g", label:"Live funnels monitored", value:"3 US + 2 WW — stats only", vc:"kv-g"},
+      {dot:"g", label:"Audience testing", value:"4 angles live — stats only", vc:"kv-g"},
+      {dot:"y", label:"Ad tracker daily update", value:"To do", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"blue", text:"Testing & live funnel tasks are stat-monitoring only — no active action required"},
+    ]
+  },
+  marjorie: {
+    name:"Marjorie Valencona", role:"Dashboard & Tech", initials:"MV",
+    avBg:"#e0f2fe", avColor:"#0284c7", status:"warn",
+    /* ##TASKS:marjorie:START## */tasks:[
+      {sp:"sp-todo", label:"Update weekly COGS table", url:"https://app.clickup.com/t/86c8j5229"},
+      {sp:"sp-todo", label:"Please disable inactive funnels on checkout-chemp", url:"https://app.clickup.com/t/86c8j51v0"},
+      {sp:"sp-inprog", label:"Customer portal", url:"https://app.clickup.com/t/86c8dg14n"},
+      {sp:"sp-todo", label:"Check that all FB accounts integrated in our database", url:"https://app.clickup.com/t/86c853nqt"},
+      {sp:"sp-todo", label:"1Password Clean-up", url:"https://app.clickup.com/t/86c6xkdxy"},
+    ],/* ##TASKS:marjorie:END## */
+    hours: /* ##HOURS:marjorie## */null/* /##HOURS:marjorie## */, hoursLw: /* ##HOURSLW:marjorie## */null/* /##HOURSLW:marjorie## */,
+    kpis:[
+      {dot:"y", label:"Sprint priorities", value:"Not defined by Michael", vc:"kv-y"},
+      {dot:"g", label:"Customer portal", value:"In progress — Apr 25 deadline", vc:"kv-g"},
+      {dot:"g", label:"CheckoutChamp fixes", value:"Ongoing", vc:"kv-w"},
+      {dot:"y", label:"Quiz funnel app", value:"In progress — no deadline set", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"Work is project-based — daily KPIs don't apply. Needs sprint + milestone KPIs"},
+      {type:"yellow", text:"Sprint priority order not defined by Michael — blocks structured planning"},
+    ]
+  },
+  sam: {
+    name:"Sam", role:"Customer Support", initials:"SC",
+    avBg:"#ccfbf1", avColor:"#0f766e", status:"ok",
+    /* ##TASKS:sam:START## */tasks:[],/* ##TASKS:sam:END## */
+    hours: /* ##HOURS:sam## */39.2/* /##HOURS:sam## */, hoursLw: /* ##HOURSLW:sam## */43.6/* /##HOURSLW:sam## */,
+    kpis:[
+      {dot:"g", label:"ChargeBlast alerts resolved same-day", value:"100% target", vc:"kv-g"},
+      {dot:"y", label:"Tier 1 retention rate", value:"0% — customers declining, not Sam's performance", vc:"kv-y"},
+      {dot:"g", label:"Tier 3 full refunds", value:"< 20% of rebills", vc:"kv-g"},
+      {dot:"g", label:"Trustpilot reviews / month", value:"5+ (bonus threshold)", vc:"kv-g"},
+      {dot:"g", label:"Proactive outreach / day", value:"3–5 check-ins — ongoing", vc:"kv-g"},
+      {dot:"g", label:"Review req. after positive reply", value:"100%", vc:"kv-g"},
+    ],
+    flags:[
+      {type:"yellow", text:"Tier 1 retention 0% this week — customers are declining the offer, not a Sam performance issue. Monitor offer conversion separately"},
+    ]
+  },
+  sheena: {
+    name:"Sheena Grace Ragay", role:"Research & Admin", initials:"SR",
+    avBg:"#ffedd5", avColor:"#c2410c", status:"alert",
+    /* ##TASKS:sheena:START## */tasks:[],/* ##TASKS:sheena:END## */
+    hours: /* ##HOURS:sheena## */30.3/* /##HOURS:sheena## */, hoursLw: /* ##HOURSLW:sheena## */35.6/* /##HOURSLW:sheena## */,
+    kpis:[
+      {dot:"r", label:"Sub-avatars / day", value:"0 today — target: 3", vc:"kv-r"},
+      {dot:"y", label:"Sub-avatars / batch before review", value:"9 minimum", vc:"kv-y"},
+      {dot:"y", label:"Invoice / admin SLA", value:"Not defined", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"red",    text:"No active research tasks in ClickUp — daily sub-avatar target not being met"},
+      {type:"yellow", text:"Admin task SLA not defined — recommend 24h turnaround for invoices"},
+    ]
+  },
+  jerome: {
+    name:"Jerome Rafallo", role:"Competitor & Ad Research", initials:"JR",
+    avBg:"#fdf4ff", avColor:"#a21caf", status:"warn",
+    /* ##TASKS:jerome:START## */tasks:[],/* ##TASKS:jerome:END## */
+    hours: /* ##HOURS:jerome## */18.7/* /##HOURS:jerome## */, hoursLw: /* ##HOURSLW:jerome## */20.3/* /##HOURSLW:jerome## */, hrsTarget: 20,
+    kpis:[
+      {dot:"r", label:"Post-purchase upsell swipes / week", value:"2–3/week — min 5 ⚠️", vc:"kv-r"},
+      {dot:"g", label:"Static ad competitors / day", value:"3+ / day — consistent", vc:"kv-g"},
+      {dot:"g", label:"VSLs swiped / day", value:"2+ / day — consistent", vc:"kv-g"},
+      {dot:"g", label:"Quiz funnel swipes / day", value:"1 / day — consistent since Feb", vc:"kv-g"},
+      {dot:"g", label:"Friday Top Hits report", value:"Every Friday ✅", vc:"kv-g"},
+      {dot:"g", label:"Master sheet updated same day", value:"100% same-day ✅", vc:"kv-g"},
+    ],
+    flags:[
+      {type:"red", text:"Upsell swipes dropped to 2–3/week in March — below Michael's stated minimum of 5/week."},
+    ],
+  },
+  michael: {
+    name:"Michael B", role:"Owner / Advertorial Writer", initials:"MB",
+    avBg:"#fef9c3", avColor:"#92400e", status:"alert",
+    /* ##TASKS:michael:START## */tasks:[
+      {sp:"sp-todo", label:"Full woman visible (legs + before/after)", url:"https://app.clickup.com/t/86c90pxyu"},
+      {sp:"sp-todo", label:"Failed solutions → switch to avatar", url:"https://app.clickup.com/t/86c90pwz4"},
+      {sp:"sp-todo", label:"Simple video (easy to recreate)", url:"https://app.clickup.com/t/86c90pw85"},
+      {sp:"sp-todo", label:"Nurse and patient interview", url:"https://app.clickup.com/t/86c90ptux"},
+      {sp:"sp-todo", label:"Lymphatic-dtv1 - Standard - 25/03/26", url:"https://app.clickup.com/t/86c90dfmu"},
+      {sp:"sp-todo", label:"Neuropathy Science - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zpne8"},
+      {sp:"sp-todo", label:"Nurse story video script", url:"https://app.clickup.com/t/86c8zdxf2"},
+      {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
+    ],/* ##TASKS:michael:END## */
+    hours: /* ##HOURS:michael## */null/* /##HOURS:michael## */, hoursLw: /* ##HOURSLW:michael## */null/* /##HOURSLW:michael## */,
+    kpis:[
+      {dot:"r", label:"Advertorials written / week", value:"0 active — target: 4", vc:"kv-r"},
+      {dot:"g", label:"Final launch approval", value:"100% — owner of gate step 3", vc:"kv-g"},
+      {dot:"y", label:"Copy–brief to Muhammad same day", value:"When advertorial ready", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"Currently focused on advertorial automation build — Russell is backup for advertorial writing"},
+      {type:"yellow", text:"Once automation build is done, Michael returns to calendar and strategy"},
+    ]
+  },
+  natalia: {
+    name:"Natalia", role:"Operations / CoS", initials:"N",
+    avBg:"#faf5ff", avColor:"#7c3aed", status:"",
+    /* ##TASKS:natalia:START## */tasks:[],/* ##TASKS:natalia:END## */
+    hours: null,
+    kpis:[
+      {dot:"y", label:"KPIs not formally defined", value:"Ops role — needs setup", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"No tasks found assigned in Nurovita space — may manage work outside ClickUp tasks"},
+    ]
+  },
+  hajera: {
+    name:"Hajera", role:"QA", initials:"HW",
+    avBg:"#f1f5f9", avColor:"#475569", status:"",
+    /* ##TASKS:hajera:START## */tasks:[],/* ##TASKS:hajera:END## */
+    hours: /* ##HOURS:hajera## */null/* /##HOURS:hajera## */, hoursLw: /* ##HOURSLW:hajera## */null/* /##HOURSLW:hajera## */,
+    kpis:[
+      {dot:"y", label:"KPIs not formally defined", value:"QA role — needs setup", vc:"kv-y"},
+    ],
+    flags:[
+      {type:"yellow", text:"No active QA tasks found in space — all prior QA tasks are archived"},
+    ]
+  },
+};
+
+let currentWeek = 'this';
+
+function toggleWeek(week) {
+  currentWeek = week;
+  document.getElementById('btn-tw').classList.toggle('active', week === 'this');
+  document.getElementById('btn-lw').classList.toggle('active', week === 'last');
+  // Toggle KPI card hours rows
+  document.querySelectorAll('.hrs-tw').forEach(el => el.style.display = week === 'this' ? '' : 'none');
+  document.querySelectorAll('.hrs-lw').forEach(el => el.style.display = week === 'last' ? '' : 'none');
+  // Update "Hours tracked this week" label in KPI cards
+  document.querySelectorAll('.kpi-label .dot-b').forEach(dot => {
+    const lbl = dot.parentElement;
+    if (lbl.textContent.includes('Hours tracked')) {
+      lbl.lastChild.textContent = week === 'last' ? 'Hours tracked last week' : 'Hours tracked this week';
+    }
+  });
+}
+
+function openModal(key) {
+  const p = people[key];
+  if (!p) return;
+  document.getElementById('m-av').style.background = p.avBg;
+  document.getElementById('m-av').style.color = p.avColor;
+  document.getElementById('m-av').textContent = p.initials;
+  document.getElementById('m-name').textContent = p.name;
+  document.getElementById('m-role').textContent = p.role;
+
+  let html = '';
+
+  // Stats row
+  const taskCount = p.tasks.length;
+  const kpiAlerts = p.kpis.filter(k => k.dot === 'r').length;
+  const kpiWarns  = p.kpis.filter(k => k.dot === 'y').length;
+  const _hrsRaw = currentWeek === 'last' ? (p.hoursLw != null ? p.hoursLw : p.hours) : p.hours;
+  const hrsVal = _hrsRaw != null ? (_hrsRaw > 0 ? _hrsRaw.toFixed(1)+'h' : '0h') : null;
+  const _hrsTgt = p.hrsTarget || 40; const _hrsPct = _hrsRaw != null ? _hrsRaw / _hrsTgt : null; const hrsColor = _hrsRaw == null ? '#94a3b8' : _hrsPct >= 0.8 ? '#16a34a' : _hrsPct >= 0.5 ? '#d97706' : _hrsRaw > 0 ? '#dc2626' : '#94a3b8';
+  const hrsLbl = currentWeek === 'last' ? 'Hrs last week' : 'Hrs this week';
+  const hrsStat = hrsVal != null ? `<div class="modal-stat"><div class="modal-stat-val" style="color:${hrsColor}">${hrsVal}</div><div class="modal-stat-lbl">${hrsLbl}</div></div>` : '';
+  html += `<div class="modal-stat-row">
+    <div class="modal-stat"><div class="modal-stat-val" style="color:${taskCount>7?'#dc2626':taskCount>0?'#1d4ed8':'#94a3b8'}">${taskCount}</div><div class="modal-stat-lbl">Active tasks</div></div>
+    <div class="modal-stat"><div class="modal-stat-val" style="color:${kpiAlerts>0?'#dc2626':'#16a34a'}">${kpiAlerts}</div><div class="modal-stat-lbl">KPI alerts</div></div>
+    <div class="modal-stat"><div class="modal-stat-val" style="color:${kpiWarns>0?'#d97706':'#16a34a'}">${kpiWarns}</div><div class="modal-stat-lbl">Undefined KPIs</div></div>
+    ${hrsStat}
+  </div>`;
+
+  // Tasks
+  html += `<div class="modal-section"><div class="modal-section-title">Current Tasks (ClickUp)</div>`;
+  if (p.tasks.length === 0) {
+    html += `<div class="no-tasks-modal">No active tasks found in Nurovita Team Dashboard.</div>`;
+  } else {
+    p.tasks.forEach(t => {
+      html += `<div class="modal-task-item"><span class="sp ${t.sp}">${t.sp.replace('sp-','').toUpperCase()}</span><a href="${t.url}" target="_blank">${t.label}</a></div>`;
+    });
+  }
+  html += `</div>`;
+
+  // KPIs
+  html += `<div class="modal-section"><div class="modal-section-title">KPI Targets</div>`;
+  p.kpis.forEach(k => {
+    const dotColor = k.dot==='g'?'#4ade80':k.dot==='r'?'#f87171':'#fbbf24';
+    const valColor = k.vc==='kv-g'?'#16a34a':k.vc==='kv-r'?'#dc2626':k.vc==='kv-y'?'#d97706':'#475569';
+    html += `<div class="modal-kpi-row">
+      <span class="modal-kpi-label"><span style="width:7px;height:7px;border-radius:50%;background:${dotColor};display:inline-block;flex-shrink:0;${k.dot==='r'?'box-shadow:0 0 4px #f8717188;':''}"></span>${k.label}</span>
+      <span class="modal-kpi-value" style="color:${valColor}">${k.value}</span>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Flags
+  if (p.flags && p.flags.length) {
+    html += `<div class="modal-section"><div class="modal-section-title">Flags &amp; Notes</div>`;
+    p.flags.forEach(f => {
+      const icon = f.type==='red'?'⚠':'ℹ';
+      html += `<div class="modal-flag ${f.type}"><span class="modal-flag-icon">${icon}</span><span class="modal-flag-text">${f.text}</span></div>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('m-body').innerHTML = html;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+function toggleTasks(btn) {
+  const card = btn.closest('.tc');
+  const panel = card.querySelector('.tasks-panel');
+  const open = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+
+function toggleWorkload() {
+  const grid  = document.getElementById('wl-section');
+  const arrow = document.getElementById('wl-section-arrow');
+  const hidden = grid.classList.toggle('hidden-section');
+  arrow.innerHTML = hidden ? '&#9650;' : '&#9660;';
+}
+function toggleNoTasks() {
+  const cards = document.getElementById('wl-notasks-cards');
+  const arrow  = document.getElementById('wl-notasks-arrow');
+  const hidden = cards.classList.toggle('hidden-section');
+  arrow.innerHTML = hidden ? '&#9650;' : '&#9660;';
+}
+function toggleFunnels() {
+  const grid = document.getElementById('funnels-grid');
+  const toggle = document.getElementById('funnels-toggle');
+  const arrow = toggle.querySelector('span:last-child');
+  const hidden = grid.classList.toggle('hidden-section');
+  arrow.innerHTML = hidden ? '&#9650;' : '&#9660;';
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>
