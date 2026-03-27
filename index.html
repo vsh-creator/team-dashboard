@@ -160,11 +160,12 @@
 
   /* ── GOALS TRACKER ── */
   .gt-wrap { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
-  .gt-thead { display:grid; grid-template-columns:170px 1fr 1fr; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
+  .gt-thead { display:grid; grid-template-columns:170px 1fr 1fr 140px; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
   .gt-th { padding:8px 14px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; border-right:1px solid #e2e8f0; }
   .gt-th:last-child { border-right:none; }
   .gt-group-hdr { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; background:#f8fafc; padding:5px 14px; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; }
-  .gt-row { display:grid; grid-template-columns:170px 1fr 1fr; border-bottom:1px solid #f1f5f9; }
+  .gt-row { display:grid; grid-template-columns:170px 1fr 1fr 140px; border-bottom:1px solid #f1f5f9; }
+  .gt-cell-empty { background:#fafbfc; }
   .gt-row:last-child { border-bottom:none; }
   .gt-person { padding:10px 14px; display:flex; align-items:center; gap:8px; border-right:1px solid #f1f5f9; }
   .gt-av { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
@@ -246,7 +247,7 @@
 <body>
 
 <h1>Nurovita Team Dashboard</h1>
-<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->27 Mar 2026, 16:24 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update</p>
+<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->27 Mar 2026, 16:28 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update</p>
 
 <div class="alert-strip">
   <span class="text"><strong>Critical:</strong> Zero-revenue incident caused by misaligned ad copies. Two-check gate now mandatory before any funnel goes live.</span>
@@ -387,6 +388,7 @@
     <div class="gt-th">Team member</div>
     <div class="gt-th">In progress &mdash; Today</div>
     <div class="gt-th">Weekly goal &mdash; This week (Mon&ndash;Fri)</div>
+    <div class="gt-th">Revisions</div>
   </div>
 
   <!-- VIDEO -->
@@ -404,6 +406,11 @@
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:raz:weekly## -->0<!-- /##GOAL:raz:weekly## --></span><span class="gt-of">/ 15 target</span></div>
       <div class="gt-note"><!-- ##GOAL:raz:weekly:note## -->No accepted tasks this week<!-- /##GOAL:raz:weekly:note## --></div>
     </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Total revision rounds</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:raz:revisions## -->10<!-- /##GOAL:raz:revisions## --></span><span class="gt-of">rounds</span></div>
+      <div class="gt-note"><!-- ##GOAL:raz:revisions:note## -->Furosemide Animation 3: 2r • UGC Furosemide 4: 2r • UGC Furosemide 3: 3r • Concept 10: Furosemide VSL: 3r<!-- /##GOAL:raz:revisions:note## --></div>
+    </div>
   </div>
 
   <div class="gt-row">
@@ -418,6 +425,11 @@
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:tesfahun:weekly## -->3<!-- /##GOAL:tesfahun:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:tesfahun:weekly:note## -->1 accepted task this week → 3 videos<!-- /##GOAL:tesfahun:weekly:note## --></div>
     </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Total revision rounds</div>
+      <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:tesfahun:revisions## -->3<!-- /##GOAL:tesfahun:revisions## --></span><span class="gt-of">rounds</span></div>
+      <div class="gt-note"><!-- ##GOAL:tesfahun:revisions:note## -->Concept 9 - Red Legs VSL: 3r<!-- /##GOAL:tesfahun:revisions:note## --></div>
+    </div>
   </div>
 
   <div class="gt-row">
@@ -431,6 +443,11 @@
       <div class="gt-metric-name">Videos in pipeline (hooks)</div>
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:vladislav:weekly## -->0<!-- /##GOAL:vladislav:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:vladislav:weekly:note## -->No accepted tasks this week<!-- /##GOAL:vladislav:weekly:note## --></div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Total revision rounds</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:vladislav:revisions## -->1<!-- /##GOAL:vladislav:revisions## --></span><span class="gt-of">rounds</span></div>
+      <div class="gt-note"><!-- ##GOAL:vladislav:revisions:note## -->Concept 10: Furosemide VSL (Sw: 1r<!-- /##GOAL:vladislav:revisions:note## --></div>
     </div>
   </div>
 
@@ -449,6 +466,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-green"><!-- ##GOAL:muhammad:weekly## -->5<!-- /##GOAL:muhammad:weekly## --></span><span class="gt-of">at script QA</span></div>
       <div class="gt-note"><!-- ##GOAL:muhammad:weekly:note## -->5 scripts at QA • Red (5)<!-- /##GOAL:muhammad:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <div class="gt-row">
@@ -463,6 +481,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-green"><!-- ##GOAL:terie:weekly## -->10<!-- /##GOAL:terie:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:terie:weekly:note## -->Neuropathy Scince (MSM Balm): https://app.clickup.com/t/86c8zpne8 • lymphatic-dtv1 - Standard - 25/03/26: https://app.clickup.com/t/86c90dfmu • Red Legs V3 CA: https://app.clickup.com/t/86c8zx8cg<!-- /##GOAL:terie:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <div class="gt-row">
@@ -477,6 +496,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-green"><!-- ##GOAL:alexander:weekly## -->10<!-- /##GOAL:alexander:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:alexander:weekly:note## -->4 advertorials with prompts • nrpt-sn1 • nrpt-sn1-sp<!-- /##GOAL:alexander:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <!-- ADMINISTRATION -->
@@ -494,6 +514,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-grey"><!-- ##GOAL:sheena:weekly## -->—<!-- /##GOAL:sheena:weekly## --></span><span class="gt-of">/ 15 target</span></div>
       <div class="gt-note"><!-- ##GOAL:sheena:weekly:note## -->No sub-avatar deliveries this week<!-- /##GOAL:sheena:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <!-- LEADERSHIP -->
@@ -511,6 +532,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-green"><!-- ##GOAL:michael:weekly## -->4<!-- /##GOAL:michael:weekly## --></span><span class="gt-of">/ 4 target</span></div>
       <div class="gt-note"><!-- ##GOAL:michael:weekly:note## -->lymphatic dtv1 adv FINAL • lymphatic dtv1 adv sales page mechanism • lymphatic dtv1 adv<!-- /##GOAL:michael:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
 </div>
