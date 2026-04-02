@@ -247,11 +247,17 @@
 <body>
 
 <h1>Nurovita Team Dashboard</h1>
-<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->02 Apr 2026, 16:37 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update &mdash; <a href="https://vsh-creator.github.io/team-dashboard" target="_blank" style="color:#6366f1;text-decoration:none;font-weight:500;">&#127760; Live link</a></p>
+<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->02 Apr 2026, 16:50 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update &mdash; <a href="https://vsh-creator.github.io/team-dashboard" target="_blank" style="color:#6366f1;text-decoration:none;font-weight:500;">&#127760; Live link</a></p>
 
 <div class="alert-strip">
   <span class="text"><strong>Critical:</strong> Zero-revenue incident caused by misaligned ad copies. Two-check gate now mandatory before any funnel goes live.</span>
 </div>
+
+<!-- EOD STATUS TODAY -->
+<div class="section-title">EOD Status &mdash; Today</div>
+<!-- ##EOD_TODAY_START## -->
+<div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="badge green">✅ Sam</span><span class="badge green">✅ Stefan</span><span class="badge green">✅ Raz</span><span class="badge green">✅ Terie</span><span class="badge green">✅ Muhammad</span><span class="badge red" title="6.2h tracked today">❌ Sheena (6.2h)</span><span class="badge red" title="7.6h tracked today">❌ Alexander (7.6h)</span><span class="badge grey">⬜ Marjorie</span><span class="badge grey">⬜ Vladislav</span><span class="badge grey">⬜ Natalia</span><span class="badge grey">⬜ Tesfahun</span><span class="badge grey" title="Bot has no channel access">⚠️ Hajera</span><span class="badge grey" title="Bot has no channel access">⚠️ Jerome</span></div>
+<!-- ##EOD_TODAY_END## -->
 
 <!-- STATS -->
 <div class="section-title">Overall Statistics</div>
@@ -478,7 +484,7 @@
     <div class="gt-cell">
       <div class="gt-metric-name">Photo sets this week</div>
       <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:alexander:weekly## -->4<!-- /##GOAL:alexander:weekly## --></span><span class="gt-of">/ 10 target</span></div>
-      <div class="gt-note"><!-- ##GOAL:alexander:weekly:note## -->Supplement - V2 - upsell • Created a new photos set for Shopify - Natural Cooling Roller • Researching libary ads, atria, making new photos set<!-- /##GOAL:alexander:weekly:note## --></div>
+      <div class="gt-note"><!-- ##GOAL:alexander:weekly:note## -->Supplement - V2 - upsell • Created a new photos set for Shopify - Natural Cooling Roller • Researching libary ads, atria, making new photos set (ClickUp: 1 tasks)<!-- /##GOAL:alexander:weekly:note## --></div>
     </div>
     <div class="gt-cell gt-cell-empty"></div>
   </div>
@@ -655,7 +661,7 @@
     <div class="wl-card wl-none" onclick="openModal('sheena')">
       <div class="wl-av" style="background:#ffedd5;color:#c2410c">S</div>
       <div class="wl-name">Sheena</div><div class="wl-role">Research</div>
-      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">25.2h</span><span class="hrs-lw" style="display:none">32.2h</span></div>
+      <div class="wl-count">0</div><div class="wl-lbl">No tasks</div><div class="wl-hours"><span class="hrs-tw">25.5h</span><span class="hrs-lw" style="display:none">32.2h</span></div>
     </div>
     <div class="wl-card wl-none" onclick="openModal('jerome')">
       <div class="wl-av" style="background:#fdf4ff;color:#a21caf">J</div>
@@ -997,7 +1003,7 @@
       <div class="tc-right"><span class="badge red">KPI Alert</span></div>
     </div>
     <div class="tc-kpis">
-      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:sheena:START## --><span class="hrs-tw"><span class="kv-y">25.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:63%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">32.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:80%;background:#16a34a"></span></span></span><!-- ##HRS:sheena:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:sheena:START## --><span class="hrs-tw"><span class="kv-y">25.5h</span><span class="hrs-bar"><span class="hrs-fill" style="width:64%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">32.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:80%;background:#16a34a"></span></span></span><!-- ##HRS:sheena:END## --></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Sub-avatars / day</span><span class="kpi-value kv-r">0 today &mdash; target: 3</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Sub-avatars / batch</span><span class="kpi-value kv-y">9 minimum</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-y"></span>Invoice / admin SLA</span><span class="kpi-value kv-y">Not defined</span></div>
@@ -1301,7 +1307,7 @@ const people = {
     name:"Sheena Grace Ragay", role:"Research & Admin", initials:"SR",
     avBg:"#ffedd5", avColor:"#c2410c", status:"alert",
     /* ##TASKS:sheena:START## */tasks:[],/* ##TASKS:sheena:END## */
-    hours: /* ##HOURS:sheena## */25.2/* /##HOURS:sheena## */, hoursLw: /* ##HOURSLW:sheena## */32.2/* /##HOURSLW:sheena## */,
+    hours: /* ##HOURS:sheena## */25.5/* /##HOURS:sheena## */, hoursLw: /* ##HOURSLW:sheena## */32.2/* /##HOURSLW:sheena## */,
     kpis:[
       {dot:"r", label:"Sub-avatars / day", value:"0 today — target: 3", vc:"kv-r"},
       {dot:"y", label:"Sub-avatars / batch before review", value:"9 minimum", vc:"kv-y"},
