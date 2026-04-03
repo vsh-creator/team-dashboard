@@ -160,11 +160,11 @@
 
   /* ── GOALS TRACKER ── */
   .gt-wrap { background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05); }
-  .gt-thead { display:grid; grid-template-columns:170px 1fr 1fr 140px; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
+  .gt-thead { display:grid; grid-template-columns:170px 1fr 1fr 1fr 140px; background:#f8fafc; border-bottom:1px solid #e2e8f0; }
   .gt-th { padding:8px 14px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; border-right:1px solid #e2e8f0; }
   .gt-th:last-child { border-right:none; }
   .gt-group-hdr { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; background:#f8fafc; padding:5px 14px; border-top:1px solid #e2e8f0; border-bottom:1px solid #e2e8f0; }
-  .gt-row { display:grid; grid-template-columns:170px 1fr 1fr 140px; border-bottom:1px solid #f1f5f9; }
+  .gt-row { display:grid; grid-template-columns:170px 1fr 1fr 1fr 140px; border-bottom:1px solid #f1f5f9; }
   .gt-cell-empty { background:#fafbfc; }
   .gt-row:last-child { border-bottom:none; }
   .gt-person { padding:10px 14px; display:flex; align-items:center; gap:8px; border-right:1px solid #f1f5f9; }
@@ -247,7 +247,7 @@
 <body>
 
 <h1>Nurovita Team Dashboard</h1>
-<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->03 Apr 2026, 13:06 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update &mdash; <a href="https://vsh-creator.github.io/team-dashboard" target="_blank" style="color:#6366f1;text-decoration:none;font-weight:500;">&#127760; Live link</a></p>
+<p class="subtitle">Last refreshed: <span id="last-refreshed"><!-- ##TIMESTAMP## -->03 Apr 2026, 13:15 UTC<!-- /##TIMESTAMP## --></span> &mdash; run <code style="background:#e2e8f0;color:#475569;padding:1px 5px;border-radius:4px;font-size:11px;">node refresh-dashboard.js</code> to update &mdash; <a href="https://vsh-creator.github.io/team-dashboard" target="_blank" style="color:#6366f1;text-decoration:none;font-weight:500;">&#127760; Live link</a></p>
 
 <div class="alert-strip">
   <span class="text"><strong>Critical:</strong> Zero-revenue incident caused by misaligned ad copies. Two-check gate now mandatory before any funnel goes live.</span>
@@ -256,7 +256,7 @@
 <!-- EOD STATUS TODAY -->
 <div class="section-title">EOD Status &mdash; Today</div>
 <!-- ##EOD_TODAY_START## -->
-<div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="badge green">✅ Alexander</span><span class="badge green">✅ Sam</span><span class="badge green">✅ Muhammad</span><span class="badge red" title="1.6h tracked today">❌ Terie (1.6h)</span><span class="badge grey">⬜ Tesfahun</span><span class="badge grey">⬜ Vladislav</span><span class="badge grey">⬜ Natalia</span><span class="badge grey">⬜ Marjorie</span><span class="badge grey">⬜ Raz</span><span class="badge grey">⬜ Stefan</span><span class="badge grey">⬜ Sheena</span><span class="badge grey" title="Bot has no channel access">⚠️ Hajera</span><span class="badge grey" title="Bot has no channel access">⚠️ Jerome</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="badge green">✅ Muhammad</span><span class="badge green">✅ Sam</span><span class="badge green">✅ Alexander</span><span class="badge red" title="1.8h tracked today">❌ Terie (1.8h)</span><span class="badge grey">⬜ Raz</span><span class="badge grey">⬜ Tesfahun</span><span class="badge grey">⬜ Vladislav</span><span class="badge grey">⬜ Sheena</span><span class="badge grey">⬜ Stefan</span><span class="badge grey">⬜ Natalia</span><span class="badge grey">⬜ Marjorie</span><span class="badge grey" title="Bot has no channel access">⚠️ Hajera</span><span class="badge grey" title="Bot has no channel access">⚠️ Jerome</span></div>
 <!-- ##EOD_TODAY_END## -->
 
 <!-- STATS -->
@@ -393,6 +393,7 @@
     <div class="gt-th">Team member</div>
     <div class="gt-th">In progress &mdash; Today</div>
     <div class="gt-th">Weekly goal &mdash; This week (Mon&ndash;Fri)</div>
+    <div class="gt-th">From last week</div>
     <div class="gt-th">Revisions</div>
   </div>
 
@@ -410,7 +411,11 @@
       <div class="gt-metric-name">Videos in pipeline (hooks)</div>
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:raz:weekly## -->6<!-- /##GOAL:raz:weekly## --></span><span class="gt-of">/ 15 target</span></div>
       <div class="gt-note"><!-- ##GOAL:raz:weekly:note## -->2 accepted tasks this week → 6 videos<!-- /##GOAL:raz:weekly:note## --></div>
-      <div class="gt-note" style="color:#94a3b8;margin-top:2px">From last week: <!-- ##GOAL:raz:lastweek## -->3<!-- /##GOAL:raz:lastweek## --> videos</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos accepted from last week</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:raz:lastweek## -->3<!-- /##GOAL:raz:lastweek## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:raz:lastweek:note## -->1 task assigned last week → 3 videos accepted<!-- /##GOAL:raz:lastweek:note## --></div>
     </div>
     <div class="gt-cell">
       <div class="gt-metric-name">Total revision rounds</div>
@@ -430,7 +435,11 @@
       <div class="gt-metric-name">Videos in pipeline (hooks)</div>
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:tesfahun:weekly## -->0<!-- /##GOAL:tesfahun:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:tesfahun:weekly:note## -->No accepted tasks this week<!-- /##GOAL:tesfahun:weekly:note## --></div>
-      <div class="gt-note" style="color:#94a3b8;margin-top:2px">From last week: <!-- ##GOAL:tesfahun:lastweek## -->3<!-- /##GOAL:tesfahun:lastweek## --> videos</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos accepted from last week</div>
+      <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:tesfahun:lastweek## -->3<!-- /##GOAL:tesfahun:lastweek## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:tesfahun:lastweek:note## -->1 task assigned last week → 3 videos accepted<!-- /##GOAL:tesfahun:lastweek:note## --></div>
     </div>
     <div class="gt-cell">
       <div class="gt-metric-name">Total revision rounds</div>
@@ -450,7 +459,11 @@
       <div class="gt-metric-name">Videos in pipeline (hooks)</div>
       <div class="gt-nums"><span class="gt-achieved ga-red"><!-- ##GOAL:vladislav:weekly## -->0<!-- /##GOAL:vladislav:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:vladislav:weekly:note## -->No accepted tasks this week<!-- /##GOAL:vladislav:weekly:note## --></div>
-      <div class="gt-note" style="color:#94a3b8;margin-top:2px">From last week: <!-- ##GOAL:vladislav:lastweek## -->0<!-- /##GOAL:vladislav:lastweek## --> videos</div>
+    </div>
+    <div class="gt-cell">
+      <div class="gt-metric-name">Videos accepted from last week</div>
+      <div class="gt-nums"><span class="gt-achieved ga-grey"><!-- ##GOAL:vladislav:lastweek## -->0<!-- /##GOAL:vladislav:lastweek## --></span><span class="gt-of">videos</span></div>
+      <div class="gt-note"><!-- ##GOAL:vladislav:lastweek:note## -->No tasks from last week accepted<!-- /##GOAL:vladislav:lastweek:note## --></div>
     </div>
     <div class="gt-cell">
       <div class="gt-metric-name">Total revision rounds</div>
@@ -475,6 +488,7 @@
       <div class="gt-note"><!-- ##GOAL:muhammad:weekly:note## -->1 at QA • 4 production • 1 MB check • 2 ready to test • 5 scripting (1 at QA now)<!-- /##GOAL:muhammad:weekly:note## --></div>
     </div>
     <div class="gt-cell gt-cell-empty"></div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <div class="gt-row">
@@ -490,6 +504,7 @@
       <div class="gt-note"><!-- ##GOAL:terie:weekly:note## -->Changed the photos of lymphatic-dtv1-adv as per Aleksandar's request • Made adjustments on Shopify pages • Okay sure. I'll adjust it now • <@1414906329562087494> , should I delete the entire footer? (ClickUp: 1)<!-- /##GOAL:terie:weekly:note## --></div>
     </div>
     <div class="gt-cell gt-cell-empty"></div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <div class="gt-row">
@@ -504,6 +519,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:alexander:weekly## -->6<!-- /##GOAL:alexander:weekly## --></span><span class="gt-of">/ 10 target</span></div>
       <div class="gt-note"><!-- ##GOAL:alexander:weekly:note## -->Supplement - V2 - upsell • Created a new photos set for Shopify - Natural Cooling Roller • Researching libary ads, atria, making new photos set (ClickUp: 1 tasks)<!-- /##GOAL:alexander:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
     <div class="gt-cell gt-cell-empty"></div>
   </div>
 
@@ -523,6 +539,7 @@
       <div class="gt-note"><!-- ##GOAL:sheena:weekly:note## -->No sub-avatar deliveries this week<!-- /##GOAL:sheena:weekly:note## --></div>
     </div>
     <div class="gt-cell gt-cell-empty"></div>
+    <div class="gt-cell gt-cell-empty"></div>
   </div>
 
   <!-- LEADERSHIP -->
@@ -540,6 +557,7 @@
       <div class="gt-nums"><span class="gt-achieved ga-yellow"><!-- ##GOAL:michael:weekly## -->1<!-- /##GOAL:michael:weekly## --></span><span class="gt-of">/ 4 target</span></div>
       <div class="gt-note"><!-- ##GOAL:michael:weekly:note## -->Upsells 01 04<!-- /##GOAL:michael:weekly:note## --></div>
     </div>
+    <div class="gt-cell gt-cell-empty"></div>
     <div class="gt-cell gt-cell-empty"></div>
   </div>
 
@@ -628,7 +646,7 @@
     <div class="wl-card wl-medium" onclick="openModal('terie')">
       <div class="wl-av" style="background:#dcfce7;color:#15803d">T</div>
       <div class="wl-name">Terie</div><div class="wl-role">Funnel Builder</div>
-      <div class="wl-count">4</div><div class="wl-lbl">Active</div><div class="wl-hours"><span class="hrs-tw">30.2h</span><span class="hrs-lw" style="display:none">39.5h</span></div>
+      <div class="wl-count">4</div><div class="wl-lbl">Active</div><div class="wl-hours"><span class="hrs-tw">30.4h</span><span class="hrs-lw" style="display:none">39.5h</span></div>
     </div>
     <div class="wl-card wl-low" onclick="openModal('alexander')">
       <div class="wl-av" style="background:#dbeafe;color:#1d4ed8">A</div>
@@ -859,7 +877,7 @@
       <div class="ti"><span class="sp sp-todo">To Do</span><a href="https://app.clickup.com/t/86c8xppr2" target="_blank">Night Cramps - Standard - 20/03/26</a></div>
 <!-- ##TP:terie:END## --></div>
     <div class="tc-kpis">
-      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:terie:START## --><span class="hrs-tw"><span class="kv-y">30.2h</span><span class="hrs-bar"><span class="hrs-fill" style="width:76%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">39.5h</span><span class="hrs-bar"><span class="hrs-fill" style="width:99%;background:#16a34a"></span></span></span><!-- ##HRS:terie:END## --></div>
+      <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-b"></span>Hours tracked this week</span><!-- ##HRS:terie:START## --><span class="hrs-tw"><span class="kv-y">30.4h</span><span class="hrs-bar"><span class="hrs-fill" style="width:76%;background:#d97706"></span></span></span><span class="hrs-lw" style="display:none"><span class="kv-g">39.5h</span><span class="hrs-bar"><span class="hrs-fill" style="width:99%;background:#16a34a"></span></span></span><!-- ##HRS:terie:END## --></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-r"></span>Pages built / day</span><span class="kpi-value kv-r">4 this week &mdash; target: 10</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Page types</span><span class="kpi-value kv-w">Advertorial &bull; Upsell &bull; Downsell</span></div>
       <div class="kpi-row"><span class="kpi-label"><span class="kpi-alert-dot dot-g"></span>Page consistency check</span><span class="kpi-value kv-g">100% when active</span></div>
@@ -1112,7 +1130,7 @@ const people = {
       {sp:"sp-todo", label:"Neuropathy Science - Standard - 24/03/26", url:"https://app.clickup.com/t/86c8zpne8"},
       {sp:"sp-todo", label:"Night Cramps - Standard - 20/03/26", url:"https://app.clickup.com/t/86c8xppr2"},
     ],/* ##TASKS:terie:END## */
-    hours: /* ##HOURS:terie## */30.2/* /##HOURS:terie## */, hoursLw: /* ##HOURSLW:terie## */39.5/* /##HOURSLW:terie## */,
+    hours: /* ##HOURS:terie## */30.4/* /##HOURS:terie## */, hoursLw: /* ##HOURSLW:terie## */39.5/* /##HOURSLW:terie## */,
     kpis:[
       {dot:"r", label:"Pages built / week", value:"4 this week — target: 10", vc:"kv-r"},
       {dot:"r", label:"Pages built / day", value:"target: 2/day", vc:"kv-y"},
