@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>March 2026 — Monthly Recap</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; color: #1e293b; padding: 24px 32px; }
+
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .page-header h1 { font-size: 22px; font-weight: 800; color: #0f172a; }
+  .page-header .sub { font-size: 13px; color: #64748b; margin-top: 3px; }
+  .back-btn { background: #6366f1; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .back-btn:hover { background: #4f46e5; }
+
+  .section-title { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin: 28px 0 12px; }
+
+  /* Summary tiles */
+  .tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 4px; }
+  .tile { background: #fff; border-radius: 12px; padding: 16px 18px; border: 1px solid #e2e8f0; }
+  .tile-label { font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .tile-val { font-size: 28px; font-weight: 800; color: #0f172a; line-height: 1; }
+  .tile-sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+  /* Person cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+  .card { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 18px 20px; }
+  .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .av { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+  .card-name { font-size: 15px; font-weight: 700; color: #0f172a; }
+  .card-role { font-size: 11px; color: #94a3b8; margin-top: 1px; }
+
+  .kpi-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-label { color: #475569; }
+  .kpi-val { font-weight: 700; color: #0f172a; }
+  .kpi-val.green { color: #16a34a; }
+  .kpi-val.yellow { color: #d97706; }
+  .kpi-val.red { color: #dc2626; }
+  .kpi-val.blue { color: #2563eb; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .badge.green { background: #dcfce7; color: #15803d; }
+  .badge.yellow { background: #fef9c3; color: #92400e; }
+  .badge.red { background: #fee2e2; color: #b91c1c; }
+  .badge.blue { background: #dbeafe; color: #1d4ed8; }
+  .badge.grey { background: #f1f5f9; color: #64748b; }
+
+  .deliverables { margin-top: 10px; }
+  .deliverables .d-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .d-item { font-size: 11.5px; color: #475569; padding: 3px 0; border-bottom: 1px solid #f8fafc; display: flex; align-items: center; gap: 6px; }
+  .d-item:last-child { border-bottom: none; }
+  .d-dot { width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; flex-shrink: 0; }
+  .d-dot.green { background: #16a34a; }
+  .d-dot.blue { background: #3b82f6; }
+
+  .note { font-size: 11px; color: #94a3b8; margin-top: 10px; font-style: italic; }
+
+  .footer { text-align: center; font-size: 11px; color: #94a3b8; margin-top: 36px; }
+
+  /* Overall ClickUp section */
+  .cu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cu-tile { background: #fff; border-radius: 12px; padding: 14px 16px; border: 1px solid #e2e8f0; }
+  .cu-tile-label { font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .cu-tile-val { font-size: 22px; font-weight: 800; color: #0f172a; }
+  .cu-tile-sub { font-size: 11px; color: #64748b; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>📅 March 2026 — Monthly Recap</h1>
+    <div class="sub">Nurovita Team · Mar 1 – Mar 31, 2026 · Data from ClickUp + Discord EODs</div>
+  </div>
+  <a class="back-btn" href="team-kpi-dashboard.html">← Back to Dashboard</a>
+</div>
+
+<!-- OVERALL STATS -->
+<div class="section-title">Overall Month Stats</div>
+<div class="tiles">
+  <div class="tile">
+    <div class="tile-label">Tasks Closed</div>
+    <div class="tile-val">85</div>
+    <div class="tile-sub">Across all ClickUp lists</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Videos Delivered</div>
+    <div class="tile-val">33+</div>
+    <div class="tile-sub">Hooks across 8 concepts</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Funnels Launched</div>
+    <div class="tile-val">2</div>
+    <div class="tile-sub">Crepey Thighs Quiz + Furosemide Quiz</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Refunds Handled</div>
+    <div class="tile-val">142</div>
+    <div class="tile-sub">By Sam (CS)</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Visual Sets</div>
+    <div class="tile-val">8+</div>
+    <div class="tile-sub">Funnel visuals + FB photo sets</div>
+  </div>
+</div>
+
+<!-- VIDEO EDITORS -->
+<div class="section-title">Video Editors</div>
+<div class="cards">
+
+  <!-- RAZ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#fee2e2;color:#b91c1c">RL</div>
+      <div>
+        <div class="card-name">Raz Llamas</div>
+        <div class="card-role">Video Editor</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Video tasks completed</span><span class="kpi-val green">7</span></div>
+    <div class="kpi-row"><span class="kpi-label">Hooks delivered</span><span class="kpi-val green">~33</span></div>
+    <div class="kpi-row"><span class="kpi-label">Avg hooks per task</span><span class="kpi-val">~4.7</span></div>
+    <div class="kpi-row"><span class="kpi-label">Video types</span><span class="kpi-val blue">UGC + Animation</span></div>
+    <div class="deliverables">
+      <div class="d-label">Concepts Delivered</div>
+      <div class="d-item"><div class="d-dot green"></div>UGC Red Legs 2 (9 hooks — V1/V2/V3 × 3)</div>
+      <div class="d-item"><div class="d-dot green"></div>Red Legs 3 (3 hooks)</div>
+      <div class="d-item"><div class="d-dot green"></div>Red Legs Animation 1 (3 hooks)</div>
+      <div class="d-item"><div class="d-dot green"></div>Concept 4: Swollen Legs (5 hooks)</div>
+      <div class="d-item"><div class="d-dot green"></div>Concept 5, 6, 7: Crepey Skin (5+5+5 hooks)</div>
+      <div class="d-item"><div class="d-dot green"></div>Crepey Thighs — Product Aware Ad (3 hooks)</div>
+    </div>
+  </div>
+
+  <!-- TESFAHUN -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#e0f2fe;color:#0369a1">TB</div>
+      <div>
+        <div class="card-name">Tesfahun Bekele</div>
+        <div class="card-role">Video Editor</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Video tasks completed</span><span class="kpi-val yellow">1</span></div>
+    <div class="kpi-row"><span class="kpi-label">Hooks delivered</span><span class="kpi-val yellow">TBD</span></div>
+    <div class="kpi-row"><span class="kpi-label">Status</span><span class="kpi-val yellow">Onboarding month</span></div>
+    <div class="deliverables">
+      <div class="d-label">Concepts Delivered</div>
+      <div class="d-item"><div class="d-dot blue"></div>Concept 8: Swollen Legs Polished VSL</div>
+    </div>
+    <div class="note">First active month — joined team mid-March. Hook count CF not backfilled on this task.</div>
+  </div>
+
+  <!-- VLADISLAV -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#d1fae5;color:#059669">VG</div>
+      <div>
+        <div class="card-name">Vladislav Glisic</div>
+        <div class="card-role">Video Editor</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Video tasks completed</span><span class="kpi-val red">0</span></div>
+    <div class="kpi-row"><span class="kpi-label">Status</span><span class="kpi-val yellow">Onboarding / ramp-up</span></div>
+    <div class="note">No tasks closed in March in ClickUp. Ramping up in April — active tasks visible in current week pipeline.</div>
+  </div>
+
+</div>
+
+<!-- COPY, FUNNEL & DESIGN -->
+<div class="section-title">Copy, Funnel &amp; Design</div>
+<div class="cards">
+
+  <!-- TERIE -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#dcfce7;color:#15803d">TA</div>
+      <div>
+        <div class="card-name">Terie Abenes</div>
+        <div class="card-role">Funnel Builder</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Funnels launched (ClickUp)</span><span class="kpi-val green">2</span></div>
+    <div class="kpi-row"><span class="kpi-label">Pages built (Discord EODs)</span><span class="kpi-val green">~7</span></div>
+    <div class="kpi-row"><span class="kpi-label">Page types</span><span class="kpi-val blue">Upsell · Downsell</span></div>
+    <div class="kpi-row"><span class="kpi-label">Avg Hubstaff hours/week</span><span class="kpi-val">~30h</span></div>
+    <div class="deliverables">
+      <div class="d-label">Funnels Completed (ClickUp)</div>
+      <div class="d-item"><div class="d-dot green"></div>Crepey Thighs Quiz — Mar 2</div>
+      <div class="d-item"><div class="d-dot green"></div>Furosemide Quiz — Mar 2</div>
+      <div class="d-label" style="margin-top:8px">Pages (Discord EODs)</div>
+      <div class="d-item"><div class="d-dot blue"></div>sl-upsell1-v2, sl-upsell2-v2</div>
+      <div class="d-item"><div class="d-dot blue"></div>sl-downsell1-v2, sl-downsell2-v2, sl-downsell-v2</div>
+    </div>
+  </div>
+
+  <!-- ALEXANDER -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#dbeafe;color:#1d4ed8">AM</div>
+      <div>
+        <div class="card-name">Alexander (Aleksandar)</div>
+        <div class="card-role">Designer</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Funnel visual sets (ClickUp)</span><span class="kpi-val green">8</span></div>
+    <div class="kpi-row"><span class="kpi-label">FB photo sets (Discord)</span><span class="kpi-val green">10+</span></div>
+    <div class="kpi-row"><span class="kpi-label">Advertorial visuals</span><span class="kpi-val green">6</span></div>
+    <div class="kpi-row"><span class="kpi-label">EOD reports submitted</span><span class="kpi-val">~18</span></div>
+    <div class="deliverables">
+      <div class="d-label">Key Deliverables</div>
+      <div class="d-item"><div class="d-dot green"></div>8 × "Create visuals for funnel" tasks</div>
+      <div class="d-item"><div class="d-dot green"></div>James C. character photo sets (multiple)</div>
+      <div class="d-item"><div class="d-dot green"></div>rl-adv2, rl-adv3, nrpt-sn1, nrpt-sn1-sp</div>
+      <div class="d-item"><div class="d-dot green"></div>Hypertension / Lipedema / Metformin angle sets</div>
+      <div class="d-item"><div class="d-dot blue"></div>B-roll videos for video editors</div>
+    </div>
+  </div>
+
+  <!-- MUHAMMAD -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#ede9fe;color:#6d28d9">MH</div>
+      <div>
+        <div class="card-name">Muhammad Hameed</div>
+        <div class="card-role">Copywriter / Scriptwriter</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Dedicated ad copy tasks</span><span class="kpi-val green">3</span></div>
+    <div class="kpi-row"><span class="kpi-label">Scripts (Video Factory)</span><span class="kpi-val green">27</span></div>
+    <div class="kpi-row"><span class="kpi-label">Total tasks contributed to</span><span class="kpi-val green">27+</span></div>
+    <div class="deliverables">
+      <div class="d-label">Ad Copy Tasks</div>
+      <div class="d-item"><div class="d-dot green"></div>Crepey Thighs — Ad Copies Set 2</div>
+      <div class="d-item"><div class="d-dot green"></div>Nora ad copies set 2 (3×)</div>
+      <div class="d-item"><div class="d-dot green"></div>Furosemide Natives Set 5</div>
+      <div class="d-label" style="margin-top:8px">Scripts (co-assignee on all Video Factory tasks)</div>
+      <div class="d-item"><div class="d-dot blue"></div>27 video concepts across Crepey Thighs, Swollen Legs, Red Legs, Furosemide</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CUSTOMER SUPPORT -->
+<div class="section-title">Customer Support</div>
+<div class="cards cards-2">
+
+  <!-- SAM -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#ccfbf1;color:#0f766e">SC</div>
+      <div>
+        <div class="card-name">Sam</div>
+        <div class="card-role">Customer Support</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">EOD reports submitted</span><span class="kpi-val green">103</span></div>
+    <div class="kpi-row"><span class="kpi-label">Refunds handled</span><span class="kpi-val">142</span></div>
+    <div class="kpi-row"><span class="kpi-label">Tier 1 offers sent</span><span class="kpi-val">338</span></div>
+    <div class="kpi-row"><span class="kpi-label">Tier 1 accepted</span><span class="kpi-val yellow">6</span></div>
+    <div class="kpi-row"><span class="kpi-label">T1 acceptance rate</span><span class="kpi-val yellow">1.8%</span></div>
+    <div class="kpi-row"><span class="kpi-label">Avg Hubstaff hours/week</span><span class="kpi-val green">~38h</span></div>
+    <div class="note">T1 rate is low — customers declining offers, not a Sam performance issue. Offer conversion needs review separately.</div>
+  </div>
+
+  <!-- OVERALL CLICKUP -->
+  <div class="card">
+    <div class="card-head">
+      <div class="av" style="background:#f1f5f9;color:#475569">📊</div>
+      <div>
+        <div class="card-name">ClickUp Overview</div>
+        <div class="card-role">All lists · March 2026</div>
+      </div>
+    </div>
+    <div class="kpi-row"><span class="kpi-label">Total tasks closed</span><span class="kpi-val">~85</span></div>
+    <div class="kpi-row"><span class="kpi-label">Video Factory tasks</span><span class="kpi-val">27</span></div>
+    <div class="kpi-row"><span class="kpi-label">Funnel Pipeline tasks</span><span class="kpi-val">56</span></div>
+    <div class="kpi-row"><span class="kpi-label">Funnels live (end of March)</span><span class="kpi-val green">2 US</span></div>
+    <div class="kpi-row"><span class="kpi-label">Video concepts in pipeline (EOM)</span><span class="kpi-val blue">10+</span></div>
+    <div class="deliverables">
+      <div class="d-label">Content Produced in March</div>
+      <div class="d-item"><div class="d-dot green"></div>Crepey Thighs — 3 video concepts + 2 funnel variants</div>
+      <div class="d-item"><div class="d-dot green"></div>Swollen Legs / Furosemide — 4 concepts + 2 quiz funnels</div>
+      <div class="d-item"><div class="d-dot green"></div>Red Legs — 3 UGC + 1 animation concept</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Nurovita Internal · March 2026 Monthly Recap · Generated Apr 2026</div>
+
+</body>
+</html>
