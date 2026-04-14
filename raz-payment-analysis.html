@@ -145,13 +145,14 @@
   <div class="section">
     <div class="section-label">Payment Options</div>
 
-    <div class="option-card">
+    <div class="option-card recommended">
       <div class="option-header">
         <div class="option-badge badge-a">A</div>
         <div>
           <div class="option-title">Per Finished Video</div>
           <div class="option-subtitle">Output-based · no tracking required</div>
         </div>
+        <div class="rec-pill">SELECTED</div>
       </div>
 
       <div class="rate-box">
@@ -192,122 +193,27 @@
       </div>
     </div>
 
-    <!-- Option B -->
-    <div class="option-card">
-      <div class="option-header">
-        <div class="option-badge badge-b">B</div>
-        <div>
-          <div class="option-title">Per Hour</div>
-          <div class="option-subtitle">Time-based · Hubstaff required</div>
-        </div>
-      </div>
-
-      <div class="rate-box">
-        <div class="rate-item"><div class="rate-val">$6<span style="font-size:13px;font-weight:500;color:#64748b">/hr</span></div><div class="rate-lbl">All tracked work (video + revisions)</div></div>
-        <div class="rate-item"><div class="rate-val">~31h</div><div class="rate-lbl">Break-even vs per-video avg</div></div>
-      </div>
-
-      <table>
-        <thead><tr><th>Hours tracked</th><th>Weekly pay</th><th>vs Per-video avg ($187)</th></tr></thead>
-        <tbody>
-          <tr><td>20h</td><td class="num">$120</td><td class="red">-$67</td></tr>
-          <tr><td>25h</td><td class="num">$150</td><td class="red">-$37</td></tr>
-          <tr class="highlight-row"><td>31h (break-even)</td><td class="num">$187</td><td>—</td></tr>
-          <tr><td>35h</td><td class="num">$210</td><td class="green">+$23</td></tr>
-          <tr><td>40h</td><td class="num">$240</td><td class="green">+$53</td></tr>
-        </tbody>
-      </table>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <div class="pros-cons-title">Pros</div>
-          <ul>
-            <li>Revisions fully compensated</li>
-            <li>Covers briefing and communication time</li>
-            <li>Simple for Raz to understand</li>
-            <li>Fair during unpredictable weeks</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <div class="pros-cons-title">Cons</div>
-          <ul>
-            <li>Slow work = more pay (wrong incentive)</li>
-            <li>No link to video quality or performance</li>
-            <li>Risk of billing hours during idle periods</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="warning">
-        <div class="icon">⚠️</div>
-        <div><strong>Raz is not currently on Hubstaff.</strong> Hours cannot be verified without setting this up first. Without tracking, hourly pay runs entirely on trust.</div>
-      </div>
-    </div>
-
-    <!-- Option C -->
-    <div class="option-card recommended">
-      <div class="option-header">
-        <div class="option-badge badge-c">C</div>
-        <div>
-          <div class="option-title">Hybrid — Per Video + Hourly Revisions</div>
-          <div class="option-subtitle">Recommended · best of both structures</div>
-        </div>
-        <div class="rec-pill">RECOMMENDED</div>
-      </div>
-
-      <div class="hybrid-row">
-        <div class="hybrid-item"><div class="hi-val">$30/min</div><div class="hi-lbl">New video (hooks included)</div></div>
-        <div class="hybrid-item"><div class="hi-val">$10</div><div class="hi-lbl">Extra hook beyond 3</div></div>
-        <div class="hybrid-item"><div class="hi-val">$6/hr</div><div class="hi-lbl">Revision rounds (Hubstaff)</div></div>
-        <div class="hybrid-item"><div class="hi-val">$150</div><div class="hi-lbl">Winner bonus</div></div>
-      </div>
-
-      <table>
-        <thead><tr><th>Week scenario</th><th>New videos</th><th>Revisions</th><th>Total pay</th></tr></thead>
-        <tbody>
-          <tr><td>Slow week</td><td>3 tasks · $112</td><td>2h · $12</td><td class="num">~$124</td></tr>
-          <tr class="highlight-row"><td>Average week</td><td>5 tasks · $187</td><td>3h · $18</td><td class="num">~$205</td></tr>
-          <tr><td>Good week</td><td>7 tasks · $262</td><td>4h · $24</td><td class="num">~$286</td></tr>
-          <tr><td>+ 1 Winner</td><td>—</td><td>—</td><td class="num">+$150</td></tr>
-        </tbody>
-      </table>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <div class="pros-cons-title">Pros</div>
-          <ul>
-            <li>New content: incentivized by output</li>
-            <li>Revisions: fairly compensated</li>
-            <li>Hubstaff only required for revision hours</li>
-            <li>Winner bonus drives quality focus</li>
-            <li>Flexible — scales with both output and rework</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <div class="pros-cons-title">Cons</div>
-          <ul>
-            <li>Slightly more complex to calculate</li>
-            <li>Still needs Hubstaff for revision tracking</li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Full comparison -->
   <div class="comparison-card">
-    <div class="section-label">Full Comparison</div>
+    <div class="section-label">Per Video vs Current Flat</div>
     <table>
-      <thead><tr><th>Metric</th><th>Flat (current)</th><th>Option A · Per Video</th><th>Option B · Hourly</th><th>Option C · Hybrid</th></tr></thead>
+      <thead><tr><th>Week type</th><th>Flat (current)</th><th>Per Video (proposed)</th><th>Saving</th></tr></thead>
       <tbody>
-        <tr><td>Slow week (3 tasks)</td><td>$250</td><td>$112</td><td>$120–180</td><td class="green">~$124</td></tr>
-        <tr><td>Average week (5 tasks)</td><td>$250</td><td>$187</td><td>$150–210</td><td class="green">~$205</td></tr>
-        <tr><td>Good week (7 tasks)</td><td>$250</td><td>$262</td><td>$180–240</td><td class="green">~$286</td></tr>
-        <tr><td>Revisions covered</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Output incentive</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Performance bonus</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
-        <tr><td>Hubstaff required</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="red">✗ Full tracking</span></td><td><span class="green">Revisions only</span></td></tr>
-        <tr><td>Idle-time risk</td><td class="red">High</td><td class="green">None</td><td class="red">High</td><td class="green">Low</td></tr>
+        <tr><td>Slow week (3 tasks · 9 videos)</td><td>$250</td><td class="num">$112</td><td class="green">Save $138</td></tr>
+        <tr><td>Average week (5 tasks · 15 videos)</td><td>$250</td><td class="num">$187</td><td class="green">Save $63</td></tr>
+        <tr><td>Good week (7 tasks · 21 videos)</td><td>$250</td><td class="num">$262</td><td class="red">Over $12</td></tr>
+        <tr><td>+ 1 Winner bonus</td><td>—</td><td class="num">+$150</td><td class="grey">—</td></tr>
+      </tbody>
+    </table>
+    <table style="margin-top:16px">
+      <thead><tr><th>Metric</th><th>Flat (current)</th><th>Per Video (proposed)</th></tr></thead>
+      <tbody>
+        <tr><td>Output incentive</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Performance bonus</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Hubstaff required</td><td><span class="cross">✗</span></td><td><span class="check">✗ Not needed</span></td></tr>
+        <tr><td>Idle-time risk</td><td class="red">High</td><td class="green">None</td></tr>
       </tbody>
     </table>
   </div>
@@ -329,10 +235,11 @@
 
   <!-- Recommendation -->
   <div class="rec-card">
-    <h3>Recommendation</h3>
-    <p>Go with <strong>Option C (Hybrid)</strong>. It's the only structure that fairly covers both new video delivery and revision rounds, while maintaining the output incentive and winner bonus. Hubstaff is only needed for revision hour tracking — not full-time monitoring.</p>
+    <h3>Proposed Agreement</h3>
+    <p>Move Raz from a flat weekly rate to <strong>per finished video</strong>. No tracking required — pay is triggered only when a completed concept is delivered to "ready to test" or above in ClickUp.</p>
     <div class="rec-note">
-      <strong>If Hubstaff setup isn't feasible short-term:</strong> start with Option A (per video) and add a flat <strong>$15 per revision round</strong> as a proxy for revision time — no tracking required, simple to log in ClickUp.
+      <strong>$30 per finished minute</strong> · hooks included &nbsp;·&nbsp; <strong>$10</strong> per extra hook beyond 3 &nbsp;·&nbsp; <strong>$150 bonus</strong> per Winner ($500+/day at 1.5x ROAS)<br><br>
+      At his average video length (~1:15) this works out to <strong>~$37.50 per concept delivered.</strong> On a strong week he earns more than the old flat rate; on a slow week you only pay for what was actually produced.
     </div>
   </div>
 
