@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raz — Payment Structure Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f5f7; color: #1a1a2e; line-height: 1.6; }
+
+  .page { max-width: 860px; margin: 40px auto; padding: 0 20px 60px; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); border-radius: 16px; padding: 40px 48px; margin-bottom: 32px; color: white; }
+  .header-tag { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #94a3b8; margin-bottom: 12px; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; color: #94a3b8; }
+  .header-meta { display: flex; gap: 24px; margin-top: 24px; }
+  .header-meta-item { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 12px 20px; }
+  .header-meta-item .val { font-size: 20px; font-weight: 700; color: #fff; }
+  .header-meta-item .lbl { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  /* Context box */
+  .context-box { background: white; border-radius: 12px; padding: 24px 28px; margin-bottom: 24px; border-left: 4px solid #0f3460; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .context-box p { font-size: 14px; color: #444; }
+  .context-box strong { color: #1a1a2e; }
+
+  /* Section */
+  .section { margin-bottom: 28px; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #94a3b8; margin-bottom: 16px; }
+
+  /* Option cards */
+  .option-card { background: white; border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .option-card.recommended { border: 2px solid #10b981; }
+  .option-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .option-badge { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0; }
+  .badge-a { background: #dbeafe; color: #1d4ed8; }
+  .badge-b { background: #fef3c7; color: #d97706; }
+  .badge-c { background: #d1fae5; color: #059669; }
+  .option-title { font-size: 17px; font-weight: 700; color: #1a1a2e; }
+  .option-subtitle { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .rec-pill { margin-left: auto; background: #d1fae5; color: #059669; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; }
+
+  /* Rate box */
+  .rate-box { background: #f8fafc; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 20px; }
+  .rate-item .rate-val { font-size: 20px; font-weight: 800; color: #1a1a2e; }
+  .rate-item .rate-lbl { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f1f5f9; color: #64748b; font-weight: 600; text-align: left; padding: 10px 14px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; }
+  th:first-child { border-radius: 8px 0 0 8px; }
+  th:last-child { border-radius: 0 8px 8px 0; }
+  td { padding: 11px 14px; border-bottom: 1px solid #f1f5f9; color: #374151; }
+  tr:last-child td { border-bottom: none; }
+  .highlight-row td { background: #f0fdf4; font-weight: 600; color: #059669; }
+  .num { font-weight: 700; color: #1a1a2e; }
+  .green { color: #059669; font-weight: 600; }
+  .red { color: #dc2626; font-weight: 600; }
+  .grey { color: #94a3b8; }
+
+  /* Pros/cons */
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .pros, .cons { background: #f8fafc; border-radius: 10px; padding: 14px 16px; }
+  .pros { border-top: 3px solid #10b981; }
+  .cons { border-top: 3px solid #f43f5e; }
+  .pros-cons-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .pros .pros-cons-title { color: #059669; }
+  .cons .pros-cons-title { color: #dc2626; }
+  .pros-cons ul { list-style: none; }
+  .pros-cons ul li { font-size: 13px; color: #444; padding: 4px 0; padding-left: 18px; position: relative; }
+  .pros ul li::before { content: '✓'; position: absolute; left: 0; color: #10b981; font-weight: 700; }
+  .cons ul li::before { content: '✗'; position: absolute; left: 0; color: #f43f5e; font-weight: 700; }
+
+  /* Warning */
+  .warning { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 10px; padding: 12px 16px; margin-top: 16px; font-size: 13px; color: #92400e; display: flex; gap: 10px; align-items: flex-start; }
+  .warning .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Hybrid breakdown */
+  .hybrid-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .hybrid-item { background: #f0fdf4; border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 160px; }
+  .hybrid-item .hi-val { font-size: 16px; font-weight: 800; color: #059669; }
+  .hybrid-item .hi-lbl { font-size: 12px; color: #6b7280; margin-top: 3px; }
+
+  /* Comparison table section */
+  .comparison-card { background: white; border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .check { color: #10b981; font-weight: 700; }
+  .cross { color: #f43f5e; font-weight: 700; }
+
+  /* Market rates */
+  .market-card { background: white; border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+  /* Recommendation */
+  .rec-card { background: linear-gradient(135deg, #064e3b, #065f46); border-radius: 14px; padding: 32px 36px; color: white; }
+  .rec-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .rec-card p { font-size: 14px; color: #a7f3d0; line-height: 1.7; }
+  .rec-card .rec-note { margin-top: 16px; background: rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 18px; font-size: 13px; color: #d1fae5; }
+
+  /* Divider */
+  .divider { height: 1px; background: #e2e8f0; margin: 8px 0 24px; }
+
+  @media (max-width: 600px) {
+    .header { padding: 28px 24px; }
+    .header-meta { flex-wrap: wrap; gap: 12px; }
+    .option-card { padding: 20px; }
+    .pros-cons { grid-template-columns: 1fr; }
+    .comparison-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-tag">Internal · Confidential</div>
+    <h1>Raz — Payment Structure Analysis</h1>
+    <div class="header-sub">Prepared for Michael · April 13, 2026</div>
+    <div class="header-meta">
+      <div class="header-meta-item">
+        <div class="val">$250/wk</div>
+        <div class="lbl">Current flat rate</div>
+      </div>
+      <div class="header-meta-item">
+        <div class="val">~5 tasks</div>
+        <div class="lbl">Avg weekly output</div>
+      </div>
+      <div class="header-meta-item">
+        <div class="val">~1:15 min</div>
+        <div class="lbl">Avg video length</div>
+      </div>
+      <div class="header-meta-item">
+        <div class="val">3 hooks</div>
+        <div class="lbl">Per concept (standard)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context -->
+  <div class="context-box">
+    <p>Raz delivers <strong>ad video concepts</strong> — each task = 1 finished VSL (~1:10–1:20 min) + 3 hook variations = <strong>3 separate deliverable video files.</strong> He also handles revision rounds when Stefan or the team requests changes. Currently on a flat $250/week regardless of output or revisions volume.</p>
+  </div>
+
+  <!-- Option A -->
+  <div class="section">
+    <div class="section-label">Payment Options</div>
+
+    <div class="option-card">
+      <div class="option-header">
+        <div class="option-badge badge-a">A</div>
+        <div>
+          <div class="option-title">Per Finished Video</div>
+          <div class="option-subtitle">Output-based · no tracking required</div>
+        </div>
+      </div>
+
+      <div class="rate-box">
+        <div class="rate-item"><div class="rate-val">$30<span style="font-size:13px;font-weight:500;color:#64748b">/min</span></div><div class="rate-lbl">Finished VSL (hooks included)</div></div>
+        <div class="rate-item"><div class="rate-val">$10</div><div class="rate-lbl">Per extra hook beyond 3</div></div>
+        <div class="rate-item"><div class="rate-val">$150</div><div class="rate-lbl">Winner bonus (>$500/day · 1.5x ROAS)</div></div>
+        <div class="rate-item"><div class="rate-val">~$37.50</div><div class="rate-lbl">Per task at avg 1:15 length</div></div>
+      </div>
+
+      <table>
+        <thead><tr><th>Week type</th><th>Tasks</th><th>Videos</th><th>Pay</th><th>vs Flat $250</th></tr></thead>
+        <tbody>
+          <tr><td>Slow week</td><td>3</td><td>9</td><td class="num">$112</td><td class="green">Save $138</td></tr>
+          <tr><td>Average week</td><td>5</td><td>15</td><td class="num">$187</td><td class="green">Save $63</td></tr>
+          <tr><td>Good week</td><td>7</td><td>21</td><td class="num">$262</td><td class="red">Over $12</td></tr>
+          <tr><td>+ 1 Winner</td><td>any</td><td>—</td><td class="num">+$150</td><td class="grey">—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pros-cons-title">Pros</div>
+          <ul>
+            <li>Pay only for what's delivered</li>
+            <li>No tracking setup needed</li>
+            <li>Rewards speed and consistency</li>
+            <li>Winner bonus ties pay to real performance</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pros-cons-title">Cons</div>
+          <ul>
+            <li>Revisions are not compensated</li>
+            <li>Heavy revision weeks = Raz works more for same pay</li>
+            <li>No cover for admin or briefing time</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option B -->
+    <div class="option-card">
+      <div class="option-header">
+        <div class="option-badge badge-b">B</div>
+        <div>
+          <div class="option-title">Per Hour</div>
+          <div class="option-subtitle">Time-based · Hubstaff required</div>
+        </div>
+      </div>
+
+      <div class="rate-box">
+        <div class="rate-item"><div class="rate-val">$6<span style="font-size:13px;font-weight:500;color:#64748b">/hr</span></div><div class="rate-lbl">All tracked work (video + revisions)</div></div>
+        <div class="rate-item"><div class="rate-val">~31h</div><div class="rate-lbl">Break-even vs per-video avg</div></div>
+      </div>
+
+      <table>
+        <thead><tr><th>Hours tracked</th><th>Weekly pay</th><th>vs Per-video avg ($187)</th></tr></thead>
+        <tbody>
+          <tr><td>20h</td><td class="num">$120</td><td class="red">-$67</td></tr>
+          <tr><td>25h</td><td class="num">$150</td><td class="red">-$37</td></tr>
+          <tr class="highlight-row"><td>31h (break-even)</td><td class="num">$187</td><td>—</td></tr>
+          <tr><td>35h</td><td class="num">$210</td><td class="green">+$23</td></tr>
+          <tr><td>40h</td><td class="num">$240</td><td class="green">+$53</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pros-cons-title">Pros</div>
+          <ul>
+            <li>Revisions fully compensated</li>
+            <li>Covers briefing and communication time</li>
+            <li>Simple for Raz to understand</li>
+            <li>Fair during unpredictable weeks</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pros-cons-title">Cons</div>
+          <ul>
+            <li>Slow work = more pay (wrong incentive)</li>
+            <li>No link to video quality or performance</li>
+            <li>Risk of billing hours during idle periods</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="warning">
+        <div class="icon">⚠️</div>
+        <div><strong>Raz is not currently on Hubstaff.</strong> Hours cannot be verified without setting this up first. Without tracking, hourly pay runs entirely on trust.</div>
+      </div>
+    </div>
+
+    <!-- Option C -->
+    <div class="option-card recommended">
+      <div class="option-header">
+        <div class="option-badge badge-c">C</div>
+        <div>
+          <div class="option-title">Hybrid — Per Video + Hourly Revisions</div>
+          <div class="option-subtitle">Recommended · best of both structures</div>
+        </div>
+        <div class="rec-pill">RECOMMENDED</div>
+      </div>
+
+      <div class="hybrid-row">
+        <div class="hybrid-item"><div class="hi-val">$30/min</div><div class="hi-lbl">New video (hooks included)</div></div>
+        <div class="hybrid-item"><div class="hi-val">$10</div><div class="hi-lbl">Extra hook beyond 3</div></div>
+        <div class="hybrid-item"><div class="hi-val">$6/hr</div><div class="hi-lbl">Revision rounds (Hubstaff)</div></div>
+        <div class="hybrid-item"><div class="hi-val">$150</div><div class="hi-lbl">Winner bonus</div></div>
+      </div>
+
+      <table>
+        <thead><tr><th>Week scenario</th><th>New videos</th><th>Revisions</th><th>Total pay</th></tr></thead>
+        <tbody>
+          <tr><td>Slow week</td><td>3 tasks · $112</td><td>2h · $12</td><td class="num">~$124</td></tr>
+          <tr class="highlight-row"><td>Average week</td><td>5 tasks · $187</td><td>3h · $18</td><td class="num">~$205</td></tr>
+          <tr><td>Good week</td><td>7 tasks · $262</td><td>4h · $24</td><td class="num">~$286</td></tr>
+          <tr><td>+ 1 Winner</td><td>—</td><td>—</td><td class="num">+$150</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pros-cons-title">Pros</div>
+          <ul>
+            <li>New content: incentivized by output</li>
+            <li>Revisions: fairly compensated</li>
+            <li>Hubstaff only required for revision hours</li>
+            <li>Winner bonus drives quality focus</li>
+            <li>Flexible — scales with both output and rework</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pros-cons-title">Cons</div>
+          <ul>
+            <li>Slightly more complex to calculate</li>
+            <li>Still needs Hubstaff for revision tracking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full comparison -->
+  <div class="comparison-card">
+    <div class="section-label">Full Comparison</div>
+    <table>
+      <thead><tr><th>Metric</th><th>Flat (current)</th><th>Option A · Per Video</th><th>Option B · Hourly</th><th>Option C · Hybrid</th></tr></thead>
+      <tbody>
+        <tr><td>Slow week (3 tasks)</td><td>$250</td><td>$112</td><td>$120–180</td><td class="green">~$124</td></tr>
+        <tr><td>Average week (5 tasks)</td><td>$250</td><td>$187</td><td>$150–210</td><td class="green">~$205</td></tr>
+        <tr><td>Good week (7 tasks)</td><td>$250</td><td>$262</td><td>$180–240</td><td class="green">~$286</td></tr>
+        <tr><td>Revisions covered</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Output incentive</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Performance bonus</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Hubstaff required</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="red">✗ Full tracking</span></td><td><span class="green">Revisions only</span></td></tr>
+        <tr><td>Idle-time risk</td><td class="red">High</td><td class="green">None</td><td class="red">High</td><td class="green">Low</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Market rates -->
+  <div class="market-card">
+    <div class="section-label">Market Rate Benchmarks</div>
+    <table>
+      <thead><tr><th>Editor tier</th><th>Per minute</th><th>Per hook</th><th>Per task (~1:15 + 3 hooks)</th><th>Winner bonus</th></tr></thead>
+      <tbody>
+        <tr><td>Entry (Fiverr)</td><td>$10–15</td><td>—</td><td>$15–25</td><td>—</td></tr>
+        <tr class="highlight-row"><td><strong>Raz (proposed)</strong></td><td><strong>$30</strong></td><td><strong>$10 extra</strong></td><td><strong>$37.50</strong></td><td><strong>$150</strong></td></tr>
+        <tr><td>Mid-range (benchmark)</td><td>$30</td><td>$10 extra</td><td>$37.50</td><td>$150</td></tr>
+        <tr><td>Our top editor</td><td>$40</td><td>$10</td><td>$62.50</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:14px;font-size:13px;color:#64748b;">Raz is positioned at the mid-range benchmark — appropriate given his output quality. Top editor is 67% more expensive per task.</p>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="rec-card">
+    <h3>Recommendation</h3>
+    <p>Go with <strong>Option C (Hybrid)</strong>. It's the only structure that fairly covers both new video delivery and revision rounds, while maintaining the output incentive and winner bonus. Hubstaff is only needed for revision hour tracking — not full-time monitoring.</p>
+    <div class="rec-note">
+      <strong>If Hubstaff setup isn't feasible short-term:</strong> start with Option A (per video) and add a flat <strong>$15 per revision round</strong> as a proxy for revision time — no tracking required, simple to log in ClickUp.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
